@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon Client Idéal — Brille & Vibre</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EDE8DF;
+    --card: #FAFAF7;
+    --gold: #B8956A;
+    --gold-light: #D4B896;
+    --gold-dark: #8B6B45;
+    --text: #3D3028;
+    --text-light: #7A6A5A;
+    --border: #DDD5C8;
+    --shadow: rgba(90, 70, 50, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .header h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .header p {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-light);
+    letter-spacing: 0.5px;
+  }
+
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold-light);
+    margin: 20px auto;
+  }
+
+  /* Progress */
+  .progress-bar {
+    max-width: 640px;
+    margin: 0 auto 48px;
+  }
+
+  .progress-track {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-light), var(--gold));
+    border-radius: 2px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--text-light);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+
+  /* Steps */
+  .step {
+    max-width: 640px;
+    margin: 0 auto 32px;
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .step.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .step-header {
+    margin-bottom: 24px;
+  }
+
+  .step-number {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .step-subtitle {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-top: 6px;
+    font-weight: 300;
+  }
+
+  /* Options grid */
+  .options-grid {
+    display: grid;
+    gap: 10px;
+  }
+
+  .options-grid.cols-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 500px) {
+    .options-grid.cols-2 { grid-template-columns: 1fr; }
+  }
+
+  /* Option card */
+  .option {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    user-select: none;
+  }
+
+  .option:hover {
+    border-color: var(--gold-light);
+    box-shadow: 0 4px 16px var(--shadow);
+    transform: translateY(-1px);
+  }
+
+  .option.selected {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, #FDFAF6, #F7F0E6);
+    box-shadow: 0 4px 20px rgba(184, 149, 106, 0.15);
+  }
+
+  .option-check {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    border: 1.5px solid var(--border);
+    flex-shrink: 0;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .option.selected .option-check {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .option.selected .option-check::after {
+    content: '';
+    width: 5px;
+    height: 9px;
+    border: 2px solid white;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg) translateY(-1px);
+    display: block;
+  }
+
+  .option-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    width: 28px;
+    text-align: center;
+  }
+
+  .option-text {
+    flex: 1;
+  }
+
+  .option-label {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .option-desc {
+    font-size: 12px;
+    color: var(--text-light);
+    font-weight: 300;
+    margin-top: 2px;
+  }
+
+  /* Navigation */
+  .nav {
+    max-width: 640px;
+    margin: 32px auto 0;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn {
+    padding: 14px 32px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.25s;
+  }
+
+  .btn-prev {
+    background: transparent;
+    border: 1.5px solid var(--border);
+    color: var(--text-light);
+  }
+
+  .btn-prev:hover {
+    border-color: var(--gold-light);
+    color: var(--gold);
+  }
+
+  .btn-next {
+    background: var(--gold);
+    color: white;
+    box-shadow: 0 4px 16px rgba(184, 149, 106, 0.35);
+  }
+
+  .btn-next:hover {
+    background: var(--gold-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(184, 149, 106, 0.4);
+  }
+
+  .btn-next:disabled {
+    background: var(--border);
+    color: var(--text-light);
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Skip hint */
+  .skip-hint {
+    font-size: 11px;
+    color: var(--text-light);
+    text-align: center;
+    margin-top: 12px;
+    font-weight: 300;
+  }
+
+  /* Result */
+  #result {
+    max-width: 640px;
+    margin: 0 auto;
+    display: none;
+    animation: fadeIn 0.5s ease;
+  }
+
+  .result-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .result-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 50px;
+    margin-bottom: 16px;
+  }
+
+  .result-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .persona-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 32px var(--shadow);
+  }
+
+  .persona-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .persona-bio {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text);
+    font-weight: 300;
+    border-left: 3px solid var(--gold-light);
+    padding-left: 16px;
+    margin-bottom: 24px;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+  }
+
+  .persona-sections {
+    display: grid;
+    gap: 16px;
+  }
+
+  .persona-section {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 16px 20px;
+  }
+
+  .persona-section-title {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .persona-section-content {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .tag {
+    display: inline-block;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--text-light);
+    margin: 3px 3px 3px 0;
+  }
+
+  .tag.highlight {
+    background: linear-gradient(135deg, #FDF6EE, #F5E8D5);
+    border-color: var(--gold-light);
+    color: var(--gold-dark);
+  }
+
+  .message-box {
+    background: linear-gradient(135deg, #FDF6EE, #F5E8D5);
+    border: 1px solid var(--gold-light);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .message-box-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .message-box-text {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text);
+  }
+
+  .message-box-text strong {
+    color: var(--gold-dark);
+  }
+
+  .restart-btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background: transparent;
+    border: 1.5px solid var(--border);
+    border-radius: 50px;
+    color: var(--text-light);
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s;
+    margin-top: 12px;
+  }
+
+  .restart-btn:hover {
+    border-color: var(--gold-light);
+    color: var(--gold);
+  }
+
+  /* Tooltip */
+  .tooltip {
+    background: var(--text);
+    color: white;
+    font-size: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    position: fixed;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    max-width: 200px;
+    z-index: 100;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="brand">Brille & Vibre</div>
+  <h1>Mon Client<br><em>Idéal</em></h1>
+  <div class="divider"></div>
+  <p>Réponds aux questions pour générer ton persona personnalisé</p>
+</div>
+
+<div class="progress-bar">
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <div class="progress-label">
+    <span id="progressText">Étape 1 sur 10</span>
+    <span id="progressPct">0%</span>
+  </div>
+</div>
+
+<!-- STEP 1 -->
+<div class="step active" id="step-1">
+  <div class="step-header">
+    <div class="step-number">Étape 01 — Profil</div>
+    <div class="step-title">À qui t'adresses-tu ?</div>
+    <div class="step-subtitle">Tu peux sélectionner plusieurs réponses</div>
+  </div>
+  <div class="options-grid cols-2">
+    <div class="option" data-step="1" data-value="femme" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">👩</div>
+      <div class="option-text"><div class="option-label">Femme</div></div>
+    </div>
+    <div class="option" data-step="1" data-value="homme" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">👨</div>
+      <div class="option-text"><div class="option-label">Homme</div></div>
+    </div>
+    <div class="option" data-step="1" data-value="18-24" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🎓</div>
+      <div class="option-text"><div class="option-label">18–24 ans</div><div class="option-desc">Étudiant, jeune actif</div></div>
+    </div>
+    <div class="option" data-step="1" data-value="25-34" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">💼</div>
+      <div class="option-text"><div class="option-label">25–34 ans</div><div class="option-desc">Jeune professionnel</div></div>
+    </div>
+    <div class="option" data-step="1" data-value="35-44" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🏠</div>
+      <div class="option-text"><div class="option-label">35–44 ans</div><div class="option-desc">Parent, établi</div></div>
+    </div>
+    <div class="option" data-step="1" data-value="45+" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🌿</div>
+      <div class="option-text"><div class="option-label">45 ans et +</div><div class="option-desc">Reconversion, liberté</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2 -->
+<div class="step" id="step-2">
+  <div class="step-header">
+    <div class="step-number">Étape 02 — Situation</div>
+    <div class="step-title">Quelle est sa situation actuelle ?</div>
+    <div class="step-subtitle">Plusieurs choix possibles</div>
+  </div>
+  <div class="options-grid">
+    <div class="option" data-step="2" data-value="salarie-frustre" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">😤</div>
+      <div class="option-text"><div class="option-label">Salarié(e) frustré(e)</div><div class="option-desc">Job alimentaire, pas épanoui(e), veut un complément de revenu</div></div>
+    </div>
+    <div class="option" data-step="2" data-value="salarie-epuise" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">😮‍💨</div>
+      <div class="option-text"><div class="option-label">Salarié(e) épuisé(e)</div><div class="option-desc">Burn-out, horaires décalés, cherche à travailler à son rythme</div></div>
+    </div>
+    <div class="option" data-step="2" data-value="parent-foyer" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">👶</div>
+      <div class="option-text"><div class="option-label">Parent au foyer</div><div class="option-desc">Dépendance financière, veut gagner depuis chez soi</div></div>
+    </div>
+    <div class="option" data-step="2" data-value="chomeur" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🔍</div>
+      <div class="option-text"><div class="option-label">Demandeur d'emploi</div><div class="option-desc">Ne trouve pas de travail, cherche une alternative</div></div>
+    </div>
+    <div class="option" data-step="2" data-value="etudiant" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">📚</div>
+      <div class="option-text"><div class="option-label">Étudiant(e) / Jeune diplômé(e)</div><div class="option-desc">Petit boulot, veut se créer des revenus sans patron</div></div>
+    </div>
+    <div class="option" data-step="2" data-value="futur-entrepreneur" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🚀</div>
+      <div class="option-text"><div class="option-label">Futur entrepreneur</div><div class="option-desc">Cherche un produit clé en main pour se lancer</div></div>
+    </div>
+    <div class="option" data-step="2" data-value="entrepreneur-existant" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">📈</div>
+      <div class="option-text"><div class="option-label">Entrepreneur avec business existant</div><div class="option-desc">Veut ajouter une source de revenu automatisée</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="step" id="step-3">
+  <div class="step-header">
+    <div class="step-number">Étape 03 — Revenus</div>
+    <div class="step-title">Quels sont ses revenus mensuels actuels ?</div>
+    <div class="step-subtitle">Plusieurs choix possibles</div>
+  </div>
+  <div class="options-grid cols-2">
+    <div class="option" data-step="3" data-value="aucun-revenu" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🚫</div>
+      <div class="option-text"><div class="option-label">Aucun revenu</div><div class="option-desc">Au foyer, étudiant</div></div>
+    </div>
+    <div class="option" data-step="3" data-value="moins-1000" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">💸</div>
+      <div class="option-text"><div class="option-label">Moins de 1 000 €</div><div class="option-desc">Allocation, petits boulots</div></div>
+    </div>
+    <div class="option" data-step="3" data-value="1000-1500" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">💰</div>
+      <div class="option-text"><div class="option-label">1 000 – 1 500 €</div><div class="option-desc">SMIC, temps partiel</div></div>
+    </div>
+    <div class="option" data-step="3" data-value="1500-2500" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">💳</div>
+      <div class="option-text"><div class="option-label">1 500 – 2 500 €</div><div class="option-desc">Salarié moyen</div></div>
+    </div>
+    <div class="option" data-step="3" data-value="plus-2500" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🏆</div>
+      <div class="option-text"><div class="option-label">Plus de 2 500 €</div><div class="option-desc">Cherche la liberté, pas le revenu</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 4 -->
+<div class="step" id="step-4">
+  <div class="step-header">
+    <div class="step-number">Étape 04 — Problèmes</div>
+    <div class="step-title">Quels sont ses problèmes principaux ?</div>
+    <div class="step-subtitle">Plusieurs choix possibles</div>
+  </div>
+  <div class="options-grid">
+    <div class="option" data-step="4" data-value="fin-mois-difficile" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">📉</div>
+      <div class="option-text"><div class="option-label">Pas assez d'argent en fin de mois</div><div class="option-desc">Comptes dans le rouge, stress financier permanent</div></div>
+    </div>
+    <div class="option" data-step="4" data-value="pas-temps-famille" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">⏰</div>
+      <div class="option-text"><div class="option-label">Pas assez de temps pour sa famille</div><div class="option-desc">Horaires contraignants, présence insuffisante</div></div>
+    </div>
+    <div class="option" data-step="4" data-value="dependance-financiere" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🔗</div>
+      <div class="option-text"><div class="option-label">Dépendance financière pesante</div><div class="option-desc">Dépend d'un conjoint ou d'allocations</div></div>
+    </div>
+    <div class="option" data-step="4" data-value="vie-sans-sens" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">😶</div>
+      <div class="option-text"><div class="option-label">Sentiment d'une vie sans sens</div><div class="option-desc">Métro-boulot-dodo, aucun épanouissement</div></div>
+    </div>
+    <div class="option" data-step="4" data-value="burnout" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🔥</div>
+      <div class="option-text"><div class="option-label">Épuisement / Burn-out</div><div class="option-desc">Fatigue mentale profonde, a besoin de changer</div></div>
+    </div>
+    <div class="option" data-step="4" data-value="zero-epargne" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🪹</div>
+      <div class="option-text"><div class="option-label">Aucune épargne, zéro filet de sécurité</div><div class="option-desc">Peur de l'imprévu, vit au jour le jour</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 5 -->
+<div class="step" id="step-5">
+  <div class="step-header">
+    <div class="step-number">Étape 05 — Désirs</div>
+    <div class="step-title">Qu'est-ce qu'il/elle veut vraiment ?</div>
+    <div class="step-subtitle">Plusieurs choix possibles</div>
+  </div>
+  <div class="options-grid cols-2">
+    <div class="option" data-step="5" data-value="complement-revenu" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">➕</div>
+      <div class="option-text"><div class="option-label">500–1 000 €/mois en plus</div></div>
+    </div>
+    <div class="option" data-step="5" data-value="remplacer-salaire" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🔄</div>
+      <div class="option-text"><div class="option-label">Remplacer son salaire</div></div>
+    </div>
+    <div class="option" data-step="5" data-value="liberte-geographique" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🌍</div>
+      <div class="option-text"><div class="option-label">Travailler de partout</div></div>
+    </div>
+    <div class="option" data-step="5" data-value="etre-patron" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">👑</div>
+      <div class="option-text"><div class="option-label">Être son propre patron</div></div>
+    </div>
+    <div class="option" data-step="5" data-value="temps-famille" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">❤️</div>
+      <div class="option-text"><div class="option-label">Plus de temps en famille</div></div>
+    </div>
+    <div class="option" data-step="5" data-value="fierte" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">✨</div>
+      <div class="option-text"><div class="option-label">Se sentir fier(e) et légitime</div></div>
+    </div>
+    <div class="option" data-step="5" data-value="prouver-reussite" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🏅</div>
+      <div class="option-text"><div class="option-label">Prouver qu'il/elle peut réussir</div></div>
+    </div>
+    <div class="option" data-step="5" data-value="vie-simple" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🕊️</div>
+      <div class="option-text"><div class="option-label">Vie plus simple & sereine</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 6 -->
+<div class="step" id="step-6">
+  <div class="step-header">
+    <div class="step-number">Étape 06 — Freins</div>
+    <div class="step-title">Qu'est-ce qui le/la bloque ?</div>
+    <div class="step-subtitle">Plusieurs choix possibles</div>
+  </div>
+  <div class="options-grid cols-2">
+    <div class="option" data-step="6" data-value="ne-sait-pas-commencer" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🌀</div>
+      <div class="option-text"><div class="option-label">Ne sait pas par où commencer</div></div>
+    </div>
+    <div class="option" data-step="6" data-value="peur-arnaque" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">⚠️</div>
+      <div class="option-text"><div class="option-label">Peur de l'arnaque</div></div>
+    </div>
+    <div class="option" data-step="6" data-value="manque-confiance" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🫣</div>
+      <div class="option-text"><div class="option-label">Manque de confiance en soi</div></div>
+    </div>
+    <div class="option" data-step="6" data-value="trop-complique" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🤯</div>
+      <div class="option-text"><div class="option-label">Pense que c'est trop compliqué</div></div>
+    </div>
+    <div class="option" data-step="6" data-value="pas-competences" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">📵</div>
+      <div class="option-text"><div class="option-label">Pas de compétences digitales</div></div>
+    </div>
+    <div class="option" data-step="6" data-value="pas-temps" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">⌛</div>
+      <div class="option-text"><div class="option-label">Pas le temps avec son job</div></div>
+    </div>
+    <div class="option" data-step="6" data-value="deja-echoue" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">💔</div>
+      <div class="option-text"><div class="option-label">A déjà essayé sans résultats</div></div>
+    </div>
+    <div class="option" data-step="6" data-value="peur-jugement" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">👀</div>
+      <div class="option-text"><div class="option-label">Peur du jugement des autres</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 7 -->
+<div class="step" id="step-7">
+  <div class="step-header">
+    <div class="step-number">Étape 07 — Déclencheur</div>
+    <div class="step-title">Qu'est-ce qui l'a poussé à agir maintenant ?</div>
+    <div class="step-subtitle">Plusieurs choix possibles</div>
+  </div>
+  <div class="options-grid">
+    <div class="option" data-step="7" data-value="licenciement" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">📋</div>
+      <div class="option-text"><div class="option-label">Vient de se faire licencier</div></div>
+    </div>
+    <div class="option" data-step="7" data-value="naissance-enfant" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🍼</div>
+      <div class="option-text"><div class="option-label">Naissance d'un enfant</div><div class="option-desc">Réalise qu'il/elle ne gagne pas assez</div></div>
+    </div>
+    <div class="option" data-step="7" data-value="depense-imprevue" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">💥</div>
+      <div class="option-text"><div class="option-label">Grosse dépense imprévue</div><div class="option-desc">Réalise qu'il/elle n'a aucune épargne</div></div>
+    </div>
+    <div class="option" data-step="7" data-value="vu-quelquun-reussir" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">💡</div>
+      <div class="option-text"><div class="option-label">A vu quelqu'un réussir en ligne</div><div class="option-desc">Se dit "pourquoi pas moi ?"</div></div>
+    </div>
+    <div class="option" data-step="7" data-value="bilan-anniversaire" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🎂</div>
+      <div class="option-text"><div class="option-label">Anniversaire / bilan de vie</div><div class="option-desc">Prise de conscience, envie de changement</div></div>
+    </div>
+    <div class="option" data-step="7" data-value="a-bout" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🏳️</div>
+      <div class="option-text"><div class="option-label">En a tout simplement marre</div><div class="option-desc">Ras-le-bol total, besoin de changement immédiat</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 8 -->
+<div class="step" id="step-8">
+  <div class="step-header">
+    <div class="step-number">Étape 08 — Réseaux sociaux</div>
+    <div class="step-title">Où et comment consomme-t-il/elle du contenu ?</div>
+    <div class="step-subtitle">Plusieurs choix possibles</div>
+  </div>
+  <div class="options-grid cols-2">
+    <div class="option" data-step="8" data-value="instagram-tiktok" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">📱</div>
+      <div class="option-text"><div class="option-label">Instagram / TikTok</div><div class="option-desc">Scrolle tous les soirs</div></div>
+    </div>
+    <div class="option" data-step="8" data-value="youtube" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">▶️</div>
+      <div class="option-text"><div class="option-label">YouTube</div><div class="option-desc">Business, motivation, tutos</div></div>
+    </div>
+    <div class="option" data-step="8" data-value="facebook-groupes" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">👥</div>
+      <div class="option-text"><div class="option-label">Groupes Facebook</div><div class="option-desc">Entrepreneuriat, MLM, revenus</div></div>
+    </div>
+    <div class="option" data-step="8" data-value="podcasts" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🎧</div>
+      <div class="option-text"><div class="option-label">Podcasts</div><div class="option-desc">Dev perso, dans les transports</div></div>
+    </div>
+    <div class="option" data-step="8" data-value="suit-createurs" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">⭐</div>
+      <div class="option-text"><div class="option-label">Suit des créateurs business</div><div class="option-desc">Liberté financière, MRR, side income</div></div>
+    </div>
+    <div class="option" data-step="8" data-value="consomme-pas-cree" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">👁️</div>
+      <div class="option-text"><div class="option-label">Consomme, ne crée pas</div><div class="option-desc">Passif sur les réseaux</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 9 -->
+<div class="step" id="step-9">
+  <div class="step-header">
+    <div class="step-number">Étape 09 — Rapport à l'argent</div>
+    <div class="step-title">Quel est son rapport aux formations et à l'investissement ?</div>
+    <div class="step-subtitle">Plusieurs choix possibles</div>
+  </div>
+  <div class="options-grid">
+    <div class="option" data-step="9" data-value="jamais-achete-formation" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🆕</div>
+      <div class="option-text"><div class="option-label">N'a jamais acheté de formation en ligne</div><div class="option-desc">C'est une première pour lui/elle</div></div>
+    </div>
+    <div class="option" data-step="9" data-value="achete-sans-resultats" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">😞</div>
+      <div class="option-text"><div class="option-label">A déjà acheté sans résultats</div><div class="option-desc">Méfiant(e), mais prêt(e) à réessayer</div></div>
+    </div>
+    <div class="option" data-step="9" data-value="budget-moins-100" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">💵</div>
+      <div class="option-text"><div class="option-label">Prêt(e) à investir moins de 100 €</div></div>
+    </div>
+    <div class="option" data-step="9" data-value="budget-100-300" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">💶</div>
+      <div class="option-text"><div class="option-label">Prêt(e) à investir 100–300 €</div><div class="option-desc">Si ça lui semble sérieux et accompagné</div></div>
+    </div>
+    <div class="option" data-step="9" data-value="budget-300+" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">💎</div>
+      <div class="option-text"><div class="option-label">Prêt(e) à investir 300 € et plus</div><div class="option-desc">Voit ça comme un vrai investissement</div></div>
+    </div>
+    <div class="option" data-step="9" data-value="formation-depense" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🤔</div>
+      <div class="option-text"><div class="option-label">Voit la formation comme une dépense</div><div class="option-desc">Pas encore convaincu(e) que ça vaut le coup</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 10 -->
+<div class="step" id="step-10">
+  <div class="step-header">
+    <div class="step-number">Étape 10 — Identité & Valeurs</div>
+    <div class="step-title">Comment se voit-il/elle ?</div>
+    <div class="step-subtitle">Plusieurs choix possibles</div>
+  </div>
+  <div class="options-grid cols-2">
+    <div class="option" data-step="10" data-value="debrouillard" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🔧</div>
+      <div class="option-text"><div class="option-label">Débrouillard(e)</div><div class="option-desc">Mérite mieux que sa situation</div></div>
+    </div>
+    <div class="option" data-step="10" data-value="liberte-valeur-1" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🦅</div>
+      <div class="option-text"><div class="option-label">La liberté avant tout</div><div class="option-desc">Supporte mal l'autorité</div></div>
+    </div>
+    <div class="option" data-step="10" data-value="famille-priorite" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🏡</div>
+      <div class="option-text"><div class="option-label">Famille en priorité</div><div class="option-desc">Veut être présent(e) pour ses proches</div></div>
+    </div>
+    <div class="option" data-step="10" data-value="ambitieux-sans-methode" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🎯</div>
+      <div class="option-text"><div class="option-label">Ambitieux(se) sans méthode</div><div class="option-desc">Plein(e) d'envie, manque de cadre</div></div>
+    </div>
+    <div class="option" data-step="10" data-value="different-pas-salariat" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🦋</div>
+      <div class="option-text"><div class="option-label">Se sent différent(e)</div><div class="option-desc">Pas fait(e) pour le salariat classique</div></div>
+    </div>
+    <div class="option" data-step="10" data-value="vie-simple-sereine" onclick="toggle(this)">
+      <div class="option-check"></div>
+      <div class="option-icon">🌸</div>
+      <div class="option-text"><div class="option-label">Veut une vie simple et sereine</div><div class="option-desc">Pas devenir millionnaire, juste vivre mieux</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="result">
+  <div class="result-header">
+    <div class="result-badge">✨ Persona généré</div>
+    <div class="result-title">Ton Client Idéal</div>
+  </div>
+  <div class="persona-card" id="personaCard"></div>
+  <div class="message-box" id="messageBox"></div>
+  <button class="restart-btn" onclick="restart()">↩ Recommencer le questionnaire</button>
+</div>
+
+<!-- Navigation -->
+<div class="nav" id="navBar">
+  <button class="btn btn-prev" id="btnPrev" onclick="prevStep()" style="visibility:hidden">← Précédent</button>
+  <button class="btn btn-next" id="btnNext" onclick="nextStep()">Suivant →</button>
+</div>
+<div class="skip-hint" id="skipHint">Tu peux passer cette étape si elle ne correspond pas</div>
+
+<script>
+const TOTAL_STEPS = 10;
+let currentStep = 1;
+let answers = {};
+
+// Initialize
+for (let i = 1; i <= TOTAL_STEPS; i++) answers[i] = [];
+
+function toggle(el) {
+  el.classList.toggle('selected');
+  const step = parseInt(el.dataset.step);
+  const val = el.dataset.value;
+  if (el.classList.contains('selected')) {
+    if (!answers[step].includes(val)) answers[step].push(val);
+  } else {
+    answers[step] = answers[step].filter(v => v !== val);
+  }
+}
+
+function updateProgress() {
+  const pct = Math.round(((currentStep - 1) / TOTAL_STEPS) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `Étape ${currentStep} sur ${TOTAL_STEPS}`;
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+function nextStep() {
+  if (currentStep < TOTAL_STEPS) {
+    document.getElementById('step-' + currentStep).classList.remove('active');
+    currentStep++;
+    document.getElementById('step-' + currentStep).classList.add('active');
+    document.getElementById('btnPrev').style.visibility = 'visible';
+    if (currentStep === TOTAL_STEPS) {
+      document.getElementById('btnNext').textContent = 'Générer mon persona ✨';
+    }
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    generatePersona();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 1) {
+    document.getElementById('step-' + currentStep).classList.remove('active');
+    currentStep--;
+    document.getElementById('step-' + currentStep).classList.add('active');
+    if (currentStep === 1) document.getElementById('btnPrev').style.visibility = 'hidden';
+    document.getElementById('btnNext').textContent = 'Suivant →';
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function restart() {
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    answers[i] = [];
+    const opts = document.querySelectorAll(`[data-step="${i}"]`);
+    opts.forEach(o => o.classList.remove('selected'));
+  }
+  currentStep = 1;
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('step-1').classList.add('active');
+  document.getElementById('navBar').style.display = 'flex';
+  document.getElementById('skipHint').style.display = 'block';
+  document.getElementById('btnPrev').style.visibility = 'hidden';
+  document.getElementById('btnNext').textContent = 'Suivant →';
+  document.getElementById('progressFill').style.width = '0%';
+  document.getElementById('progressText').textContent = 'Étape 1 sur 10';
+  document.getElementById('progressPct').textContent = '0%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// === PERSONA GENERATION ENGINE ===
+
+const PRENOMS = {
+  femme: ['Sophie', 'Laura', 'Marie', 'Céline', 'Amandine', 'Fatou', 'Inès', 'Lucie', 'Noémie', 'Yasmine'],
+  homme: ['Thomas', 'Julien', 'Kevin', 'Mehdi', 'Nicolas', 'Antoine', 'Baptiste', 'Sami', 'David', 'Lucas'],
+  neutre: ['Alex', 'Sam', 'Charlie', 'Jordan', 'Camille']
+};
+
+function getPrenom(a1) {
+  if (a1.includes('femme') && !a1.includes('homme')) return pick(PRENOMS.femme);
+  if (a1.includes('homme') && !a1.includes('femme')) return pick(PRENOMS.homme);
+  return pick(PRENOMS.neutre);
+}
+
+function getAge(a1) {
+  if (a1.includes('18-24')) return rnd(19, 24);
+  if (a1.includes('25-34')) return rnd(26, 33);
+  if (a1.includes('35-44')) return rnd(36, 43);
+  if (a1.includes('45+')) return rnd(46, 54);
+  return rnd(24, 38);
+}
+
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function rnd(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+function has(step, val) { return answers[step] && answers[step].includes(val); }
+function any(step, vals) { return vals.some(v => has(step, v)); }
+
+function getSituation(a2, a3) {
+  const parts = [];
+  if (has(2, 'salarie-frustre')) parts.push('salarié(e) dans un job qui ne l\'épanouit pas');
+  else if (has(2, 'salarie-epuise')) parts.push('salarié(e) en bout de course, épuisé(e)');
+  else if (has(2, 'parent-foyer')) parts.push('parent au foyer, dépendant financièrement');
+  else if (has(2, 'chomeur')) parts.push('demandeur(euse) d\'emploi');
+  else if (has(2, 'etudiant')) parts.push('étudiant(e) qui jongle entre les cours et les petits boulots');
+  else if (has(2, 'futur-entrepreneur')) parts.push('quelqu\'un qui veut se lancer sans savoir comment');
+  else if (has(2, 'entrepreneur-existant')) parts.push('entrepreneur(e) cherchant à diversifier ses revenus');
+
+  let revenu = '';
+  if (has(3, 'aucun-revenu')) revenu = ', sans revenus propres';
+  else if (has(3, 'moins-1000')) revenu = ', avec moins de 1 000 €/mois';
+  else if (has(3, '1000-1500')) revenu = ', avec environ 1 200 €/mois';
+  else if (has(3, '1500-2500')) revenu = ', avec un salaire moyen de 2 000 €/mois';
+  else if (has(3, 'plus-2500')) revenu = ', avec un bon salaire mais une liberté inexistante';
+
+  return (parts[0] || 'quelqu\'un en quête de changement') + revenu;
+}
+
+function getDouleur(a4) {
+  const douleurs = [];
+  if (has(4, 'fin-mois-difficile')) douleurs.push('ne s\'en sort plus financièrement en fin de mois');
+  if (has(4, 'pas-temps-famille')) douleurs.push('manque cruellement de temps pour ses proches');
+  if (has(4, 'dependance-financiere')) douleurs.push('supporte mal de dépendre financièrement de quelqu\'un d\'autre');
+  if (has(4, 'vie-sans-sens')) douleurs.push('vit un quotidien qui ne lui ressemble pas');
+  if (has(4, 'burnout')) douleurs.push('est au bord du burn-out');
+  if (has(4, 'zero-epargne')) douleurs.push('angoisse à la moindre dépense imprévue');
+
+  if (douleurs.length === 0) return 'cherche à améliorer sa situation de vie';
+  if (douleurs.length === 1) return douleurs[0];
+  return douleurs.slice(0, 2).join(' et ');
+}
+
+function getDesir(a5) {
+  const desirs = [];
+  if (has(5, 'complement-revenu')) desirs.push('gagner 500 à 1 000 €/mois supplémentaires');
+  if (has(5, 'remplacer-salaire')) desirs.push('remplacer définitivement son salaire');
+  if (has(5, 'liberte-geographique')) desirs.push('travailler de n\'importe où dans le monde');
+  if (has(5, 'etre-patron')) desirs.push('être enfin son propre patron');
+  if (has(5, 'temps-famille')) desirs.push('retrouver du temps pour sa famille');
+  if (has(5, 'fierte')) desirs.push('se sentir fier(e) et légitime');
+  if (has(5, 'prouver-reussite')) desirs.push('prouver à son entourage qu\'il/elle peut réussir autrement');
+  if (has(5, 'vie-simple')) desirs.push('s\'offrir une vie simple et apaisée');
+
+  if (desirs.length === 0) return 'changer de vie';
+  if (desirs.length === 1) return desirs[0];
+  return desirs.slice(0, 2).join(' et ');
+}
+
+function getFrein(a6) {
+  const freins = [];
+  if (has(6, 'ne-sait-pas-commencer')) freins.push('ne sait pas par où commencer face à l\'infobésité');
+  if (has(6, 'peur-arnaque')) freins.push('a peur de se faire arnaquer encore une fois');
+  if (has(6, 'manque-confiance')) freins.push('manque de confiance en ses propres capacités');
+  if (has(6, 'trop-complique')) freins.push('pense que c\'est trop compliqué pour quelqu\'un comme lui/elle');
+  if (has(6, 'pas-competences')) freins.push('n\'a aucune compétence digitale');
+  if (has(6, 'pas-temps')) freins.push('n\'a pas le temps entre son job et sa vie perso');
+  if (has(6, 'deja-echoue')) freins.push('a déjà essayé des choses qui n\'ont pas fonctionné');
+  if (has(6, 'peur-jugement')) freins.push('a peur du regard et du jugement de son entourage');
+
+  if (freins.length === 0) return 'l\'inertie et le doute';
+  if (freins.length === 1) return freins[0];
+  return freins.slice(0, 2).join(' et ');
+}
+
+function getDeclencheur(a7) {
+  if (has(7, 'licenciement')) return 'Elle/il vient de se faire licencier et réalise que c\'est maintenant ou jamais.';
+  if (has(7, 'naissance-enfant')) return 'La naissance d\'un enfant a tout changé : il/elle veut être présent(e) et ne plus compter chaque euro.';
+  if (has(7, 'depense-imprevue')) return 'Une dépense imprévue l\'a mis(e) face à la réalité : aucune épargne, aucun filet de sécurité.';
+  if (has(7, 'vu-quelquun-reussir')) return 'Il/elle a vu quelqu\'un dans sa situation réussir en ligne et s\'est dit : "si lui/elle peut le faire, pourquoi pas moi ?"';
+  if (has(7, 'bilan-anniversaire')) return 'Un anniversaire a déclenché une vraie prise de conscience : ce n\'est pas la vie qu\'il/elle voulait.';
+  if (has(7, 'a-bout')) return 'Il/elle en a tout simplement marre. Le ras-le-bol total a été le déclic.';
+  return 'Une accumulation de frustrations l\'a finalement poussé(e) à chercher une solution concrète.';
+}
+
+function getReseaux(a8) {
+  const r = [];
+  if (has(8, 'instagram-tiktok')) r.push('Instagram & TikTok');
+  if (has(8, 'youtube')) r.push('YouTube');
+  if (has(8, 'facebook-groupes')) r.push('Groupes Facebook');
+  if (has(8, 'podcasts')) r.push('Podcasts');
+  if (has(8, 'suit-createurs')) r.push('créateurs business/liberté financière');
+  if (r.length === 0) return 'les réseaux sociaux (consommateur passif)';
+  return r.join(', ');
+}
+
+function getBudget(a9) {
+  if (has(9, 'budget-300+')) return 'Il/elle est prêt(e) à investir 300 € et plus si la proposition est sérieuse et l\'accompagnement réel.';
+  if (has(9, 'budget-100-300')) return 'Il/elle peut investir entre 100 et 300 € si le produit lui semble fiable et concret.';
+  if (has(9, 'budget-moins-100')) return 'Il/elle a un petit budget (moins de 100 €) mais est prêt(e) à franchir le pas pour la bonne offre.';
+  if (has(9, 'achete-sans-resultats')) return 'Il/elle a déjà investi dans une formation sans résultats : il faut regagner sa confiance avant tout.';
+  if (has(9, 'formation-depense')) return 'Il/elle perçoit encore la formation comme une dépense. Ton argumentaire doit d\'abord repositionner ça comme un investissement.';
+  if (has(9, 'jamais-achete-formation')) return 'C\'est sa première formation. Il/elle a besoin d\'être rassuré(e) à chaque étape.';
+  return 'Son budget est à confirmer, mais la confiance et la preuve sociale seront déterminantes.';
+}
+
+function getIdentite(a10) {
+  const traits = [];
+  if (has(10, 'debrouillard')) traits.push('débrouillard(e) qui mérite mieux');
+  if (has(10, 'liberte-valeur-1')) traits.push('assoiffé(e) de liberté, supporte mal l\'autorité');
+  if (has(10, 'famille-priorite')) traits.push('parent ou partenaire qui met sa famille au centre de tout');
+  if (has(10, 'ambitieux-sans-methode')) traits.push('ambitieux(se) qui manque surtout de cadre et de méthode');
+  if (has(10, 'different-pas-salariat')) traits.push('convaincu(e) de ne pas être fait(e) pour le salariat classique');
+  if (has(10, 'vie-simple-sereine')) traits.push('en quête d\'une vie plus simple et sereine, pas millionnaire');
+  if (traits.length === 0) return 'quelqu\'un de motivé qui cherche sa voie';
+  return traits.slice(0, 2).join(', ');
+}
+
+function getHookMessage(answers) {
+  // Intelligent message based on dominant profile
+  const isParent = has(2, 'parent-foyer') || has(10, 'famille-priorite');
+  const isBurnout = has(2, 'salarie-epuise') || has(4, 'burnout');
+  const isStudents = has(2, 'etudiant') || any(1, ['18-24']);
+  const isMefiant = has(9, 'achete-sans-resultats') || has(6, 'peur-arnaque');
+  const isLiberte = has(5, 'liberte-geographique') || has(10, 'liberte-valeur-1') || has(5, 'etre-patron');
+
+  if (isParent && isMefiant) {
+    return {
+      hook: '🎯 Angle recommandé : Sécurité + Présence familiale',
+      message: `Ton message clé doit mettre en avant la <strong>sécurité du produit clé en main</strong> et le fait qu'on peut le faire <strong>depuis chez soi, autour des enfants</strong>. Insiste sur les preuves sociales (témoignages de mamans/papas qui ont réussi) et sur l'accompagnement pas à pas. Évite les promesses trop grandiloquentes qui vont renforcer sa méfiance.`
+    };
+  }
+  if (isBurnout) {
+    return {
+      hook: '🎯 Angle recommandé : Sortie de l\'épuisement',
+      message: `Ce persona est <strong>émotionnellement à bout</strong>. Ton message doit d'abord valider sa fatigue ("Tu n'as pas tort d'en avoir marre.") avant de proposer la solution. Insiste sur la <strong>simplicité</strong> et le fait qu'il n'a pas besoin d'en faire plus — le système travaille pour lui.`
+    };
+  }
+  if (isStudents) {
+    return {
+      hook: '🎯 Angle recommandé : Liberté & Premiers revenus',
+      message: `Parle-lui de <strong>premiers revenus sans diplôme supplémentaire</strong>, de la liberté de bosser de sa chambre ou d'un café. Ce persona est natif du digital, il veut voir du concret vite. Mise sur les <strong>résultats rapides</strong> et l'aspect communautaire.`
+    };
+  }
+  if (isLiberte) {
+    return {
+      hook: '🎯 Angle recommandé : Liberté totale',
+      message: `Ce persona ne veut pas juste de l'argent — il/elle veut <strong>récupérer son temps et sa liberté</strong>. Vends-lui un mode de vie avant de vendre un produit. Montre-lui ce que ça permet de faire : voyager, être présent(e), travailler en pyjama. <strong>La liberté est ton argument numéro 1.</strong>`
+    };
+  }
+  if (isMefiant) {
+    return {
+      hook: '🎯 Angle recommandé : Confiance & Transparence',
+      message: `Ce persona a été déçu. Il/elle a besoin de <strong>preuves concrètes</strong> avant de faire confiance. Ton contenu doit rassurer : montre ton process, tes résultats, des témoignages réels. Sois transparent(e) sur ce que c'est et ce que ce n'est pas. <strong>L'honnêteté est ton meilleur outil de vente.</strong>`
+    };
+  }
+  return {
+    hook: '🎯 Angle recommandé : Solution clé en main',
+    message: `Ce persona cherche <strong>une solution concrète et rapide à mettre en place</strong>. Ton message doit insister sur la simplicité du démarrage, l'accompagnement et le fait que d'autres débutants y sont arrivés. <strong>Dédramatise le lancement</strong> et montre que tout est déjà prêt pour lui/elle.`
+  };
+}
+
+function generatePersona() {
+  const a1 = answers[1];
+  const prenom = getPrenom(a1);
+  const age = getAge(a1);
+  const situation = getSituation(answers[2], answers[3]);
+  const douleur = getDouleur(answers[4]);
+  const desir = getDesir(answers[5]);
+  const frein = getFrein(answers[6]);
+  const declencheur = getDeclencheur(answers[7]);
+  const reseaux = getReseaux(answers[8]);
+  const budget = getBudget(answers[9]);
+  const identite = getIdentite(answers[10]);
+  const hook = getHookMessage(answers);
+
+  const bio = `"${prenom}, ${age} ans, est ${situation}. Il/Elle ${douleur} et rêve de ${desir}. Mais ce qui le/la bloque encore, c'est que ${frein}."`;
+
+  const personaHTML = `
+    <div class="persona-name">👤 ${prenom}, ${age} ans</div>
+    <div class="persona-bio">${bio}</div>
+    <div class="persona-sections">
+      <div class="persona-section">
+        <div class="persona-section-title">🔥 Élément déclencheur</div>
+        <div class="persona-section-content">${declencheur}</div>
+      </div>
+      <div class="persona-section">
+        <div class="persona-section-title">📱 Où le/la trouver</div>
+        <div class="persona-section-content">${reseaux}</div>
+      </div>
+      <div class="persona-section">
+        <div class="persona-section-title">💶 Budget & Rapport à la formation</div>
+        <div class="persona-section-content">${budget}</div>
+      </div>
+      <div class="persona-section">
+        <div class="persona-section-title">🪞 Identité profonde</div>
+        <div class="persona-section-content">Il/Elle se voit comme ${identite}.</div>
+      </div>
+    </div>
+  `;
+
+  const messageHTML = `
+    <div class="message-box-title">${hook.hook}</div>
+    <div class="message-box-text">${hook.message}</div>
+  `;
+
+  document.getElementById('personaCard').innerHTML = personaHTML;
+  document.getElementById('messageBox').innerHTML = messageHTML;
+
+  // Hide steps & nav
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    const el = document.getElementById('step-' + i);
+    if (el) el.classList.remove('active');
+  }
+  document.getElementById('navBar').style.display = 'none';
+  document.getElementById('skipHint').style.display = 'none';
+  document.getElementById('result').style.display = 'block';
+
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressText').textContent = 'Persona généré !';
+  document.getElementById('progressPct').textContent = '100%';
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+updateProgress();
+</script>
+</body>
+</html>
