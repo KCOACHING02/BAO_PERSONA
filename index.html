@@ -4,458 +4,478 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mon Client Idéal — Brille & Vibre</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
- :root {
- --bg: #EDE8DF;
- --card: #FAFAF7;
- --gold: #B8956A;
- --gold-light: #D4B896;
- --gold-dark: #8B6B45;
- --text: #3D3028;
- --text-light: #7A6A5A;
- --border: #DDD5C8;
- --shadow: rgba(90,70,50,0.08);
- }
- * { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --gold:       #C9A84C;
+  --gold-light: #E8CC80;
+  --gold-pale:  #F5EDD4;
+  --gold-dark:  #9A7530;
+  --cream:      #FAF6EF;
+  --beige:      #EDE4D3;
+  --black:      #0D0D0D;
+  --text:       #3A2E24;
+  --text-light: #8C7560;
+  --border:     rgba(201,168,76,0.2);
+  --card:       #ffffff;
+  --shadow:     rgba(58,46,36,0.08);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
 
- body {
- font-family: 'Jost', sans-serif;
- background: var(--bg);
- color: var(--text);
- min-height: 100vh;
- padding: 40px 20px 80px;
- }
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
 
- /* Header */
- .logo-circle {
- width: 90px; height: 90px;
- border-radius: 50%;
- border: 2.5px solid var(--gold-light);
- overflow: hidden;
- margin: 12px auto 20px;
- box-shadow: 0 4px 20px rgba(184,149,106,0.2);
- }
- .logo-circle img { width:100%; height:100%; object-fit:cover; object-position:center 30%; }
+/* ── BACK BAR ── */
+.back-bar {
+  background: var(--black);
+  padding: 13px 24px;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(250,246,239,0.6);
+  text-decoration: none;
+  padding: 7px 13px;
+  border-radius: 8px;
+  border: 1px solid rgba(201,168,76,0.25);
+  background: rgba(201,168,76,0.08);
+  transition: all 0.2s ease;
+}
+.back-btn:hover {
+  background: rgba(201,168,76,0.18);
+  border-color: rgba(201,168,76,0.5);
+  color: var(--gold-light);
+  transform: translateX(-2px);
+}
+.back-btn svg { width:13px; height:13px; stroke:currentColor; flex-shrink:0; }
 
- .header { text-align:center; margin-bottom:48px; }
- .brand {
- font-family:'Cormorant Garamond',serif;
- font-size:15px; font-weight:400;
- letter-spacing:3px; text-transform:uppercase;
- color:var(--gold); margin-bottom:8px;
- }
- .header h1 {
- font-family:'Cormorant Garamond',serif;
- font-size:clamp(32px,6vw,52px);
- font-weight:300; color:var(--text); line-height:1.2; margin-bottom:12px;
- }
- .header h1 em { font-style:italic; color:var(--gold); }
- .header p { font-size:14px; font-weight:300; color:var(--text-light); letter-spacing:.5px; }
- .divider { width:60px; height:1px; background:var(--gold-light); margin:20px auto; }
+/* ── HEADER ── */
+.header { text-align:center; padding: 48px 20px 36px; }
 
- /* Progress */
- .progress-bar { max-width:640px; margin:0 auto 48px; }
- .progress-track { height:3px; background:var(--border); border-radius:2px; overflow:hidden; }
- .progress-fill {
- height:100%;
- background:linear-gradient(90deg,var(--gold-light),var(--gold));
- border-radius:2px; transition:width .5s ease; width:0%;
- }
- .progress-label {
- display:flex; justify-content:space-between;
- margin-top:8px; font-size:12px; color:var(--text-light);
- font-weight:300; letter-spacing:.5px;
- }
+.logo-ring {
+  position: relative;
+  width: 88px; height: 88px;
+  margin: 0 auto 20px;
+}
+.logo-ring::before {
+  content: '';
+  position: absolute; inset: -5px;
+  border-radius: 50%;
+  background: conic-gradient(var(--gold), var(--gold-light), var(--gold-pale), var(--gold), var(--gold-light), var(--gold));
+  animation: spin 8s linear infinite;
+}
+.logo-ring::after {
+  content: '';
+  position: absolute; inset: -3px;
+  border-radius: 50%;
+  background: var(--cream);
+}
+.logo-img {
+  position: relative; z-index: 1;
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  object-fit: cover; object-position: center 30%;
+  display: block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
- /* Steps */
- .step { max-width:640px; margin:0 auto 32px; display:none; animation:fadeIn .4s ease; }
- .step.active { display:block; }
- @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+.brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px; font-style: italic;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px,7vw,52px);
+  font-weight: 900; line-height: 1.15;
+  color: var(--text); margin-bottom: 12px;
+}
+.header h1 em { font-style:italic; color:var(--gold); }
+.divider { width:40px; height:2px; background:linear-gradient(90deg,var(--gold),var(--gold-light)); border-radius:2px; margin:16px auto; }
+.header p { font-size:14px; font-weight:400; color:var(--text-light); }
 
- .step-header { margin-bottom:24px; }
- .step-number {
- font-size:clamp(13px,3vw,14px); font-weight:500;
- letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:8px;
- }
- .step-title {
- font-family:'Cormorant Garamond',serif;
- font-size:clamp(24px,5.5vw,32px); font-weight:400;
- color:var(--text); line-height:1.3;
- }
- .step-subtitle { font-size:14px; color:var(--text-light); margin-top:6px; font-weight:300; }
+/* ── PROGRESS ── */
+.progress-bar { max-width:640px; margin:0 auto 40px; padding:0 20px; }
+.progress-track { height:3px; background:var(--beige); border-radius:2px; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-light)); border-radius:2px; transition:width .5s ease; width:0%; }
+.progress-label { display:flex; justify-content:space-between; margin-top:8px; font-size:12px; color:var(--text-light); font-family:'DM Mono',monospace; }
 
- /* Options */
- .options-grid { display:grid; gap:10px; }
+/* ── STEPS ── */
+.step { max-width:640px; margin:0 auto 28px; padding:0 20px; display:none; animation:fadeIn .4s ease; }
+.step.active { display:block; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
 
- .option {
- background:var(--card);
- border:1.5px solid var(--border);
- border-radius:14px;
- padding:14px 18px;
- cursor:pointer;
- transition:all .2s ease;
- display:flex; align-items:center; gap:12px;
- user-select:none;
- }
- .option:hover { border-color:var(--gold-light); box-shadow:0 4px 16px var(--shadow); transform:translateY(-1px); }
- .option.selected {
- border-color:var(--gold);
- background:linear-gradient(135deg,#FDFAF6,#F7F0E6);
- box-shadow:0 4px 20px rgba(184,149,106,0.15);
- }
+.step-number { font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:8px; font-family:'DM Mono',monospace; }
+.step-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(22px,5vw,30px); font-weight:700;
+  color:var(--text); line-height:1.3; margin-bottom:6px;
+}
+.step-subtitle { font-size:13px; color:var(--text-light); margin-bottom:20px; }
 
- .option-check {
- width:20px; height:20px; border-radius:6px;
- border:1.5px solid var(--border); flex-shrink:0;
- transition:all .2s; display:flex; align-items:center; justify-content:center;
- }
- .option.selected .option-check { background:var(--gold); border-color:var(--gold); }
- .option.selected .option-check::after {
- content:''; width:5px; height:9px;
- border:2px solid white; border-top:none; border-left:none;
- transform:rotate(45deg) translateY(-1px); display:block;
- }
+/* ── OPTIONS ── */
+.options-grid { display:grid; gap:9px; }
+.option {
+  background: var(--card);
+  border: 1.5px solid var(--beige);
+  border-radius: 14px;
+  padding: 13px 16px;
+  cursor: pointer;
+  transition: all .2s ease;
+  display: flex; align-items: center; gap: 12px;
+  user-select: none;
+}
+.option:hover { border-color:var(--gold); background:var(--gold-pale); transform:translateY(-1px); box-shadow:0 4px 14px var(--shadow); }
+.option.selected {
+  border-color: var(--gold);
+  background: linear-gradient(135deg,var(--gold-pale),rgba(232,204,128,0.2));
+  box-shadow: 0 4px 16px rgba(201,168,76,0.18);
+}
+.option-check {
+  width:20px; height:20px; border-radius:6px;
+  border:1.5px solid var(--beige); flex-shrink:0;
+  transition:all .2s; display:flex; align-items:center; justify-content:center;
+}
+.option.selected .option-check { background:var(--gold); border-color:var(--gold); }
+.option.selected .option-check::after {
+  content:''; width:5px; height:9px;
+  border:2px solid white; border-top:none; border-left:none;
+  transform:rotate(45deg) translateY(-1px); display:block;
+}
+.option-label { font-size:clamp(14px,3.5vw,15px); font-weight:500; color:var(--text); line-height:1.3; }
 
- .option-icon { font-size:18px; flex-shrink:0; width:28px; text-align:center; }
- .option-text { flex:1; }
- .option-label { font-size:clamp(15px,3.8vw,16px); font-weight:400; color:var(--text); line-height:1.3; }
+/* ── NAV ── */
+.nav { max-width:640px; margin:28px auto 0; padding:0 20px; display:flex; gap:12px; justify-content:space-between; align-items:center; }
+.btn { padding:13px 28px; border-radius:50px; border:none; cursor:pointer; font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:600; letter-spacing:0.5px; transition:all .25s; }
+.btn-prev { background:transparent; border:1.5px solid var(--beige); color:var(--text-light); }
+.btn-prev:hover { border-color:var(--gold); color:var(--gold); }
+.btn-next { background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--black); box-shadow:0 4px 16px rgba(201,168,76,.3); }
+.btn-next:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(201,168,76,.4); }
+.skip-hint { font-size:12px; color:var(--text-light); text-align:center; margin-top:10px; max-width:640px; margin-inline:auto; padding:0 20px; }
 
- /* Nav */
- .nav {
- max-width:640px; margin:32px auto 0;
- display:flex; gap:12px; justify-content:space-between; align-items:center;
- }
- .btn {
- padding:14px 32px; border-radius:50px; border:none; cursor:pointer;
- font-family:'Jost',sans-serif; font-size:clamp(14px,3.5vw,15px);
- font-weight:500; letter-spacing:1px; text-transform:uppercase; transition:all .25s;
- }
- .btn-prev { background:transparent; border:1.5px solid var(--border); color:var(--text-light); }
- .btn-prev:hover { border-color:var(--gold-light); color:var(--gold); }
- .btn-next { background:var(--gold); color:white; box-shadow:0 4px 16px rgba(184,149,106,.35); }
- .btn-next:hover { background:var(--gold-dark); transform:translateY(-1px); box-shadow:0 6px 20px rgba(184,149,106,.4); }
- .skip-hint { font-size:13px; color:var(--text-light); text-align:center; margin-top:12px; font-weight:300; }
+/* ── RESULT ── */
+#result { max-width:680px; margin:0 auto; padding:0 20px; display:none; animation:fadeIn .5s ease; }
 
- /* ── Result ── */
- #result { max-width:680px; margin:0 auto; display:none; animation:fadeIn .5s ease; }
+.result-header { text-align:center; margin-bottom:32px; padding-top:8px; }
+.result-badge {
+  display:inline-block;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  color:var(--black); font-size:10px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase;
+  padding:5px 14px; border-radius:50px; margin-bottom:14px;
+}
+.result-title { font-family:'Playfair Display',serif; font-size:clamp(28px,6vw,40px); font-weight:900; color:var(--text); margin-bottom:6px; }
+.result-subtitle { font-size:13px; color:var(--text-light); }
 
- .result-header { text-align:center; margin-bottom:36px; }
- .result-badge {
-   display:inline-block;
-   background:linear-gradient(135deg,var(--gold-light),var(--gold));
-   color:white; font-size:11px; font-weight:500;
-   letter-spacing:2px; text-transform:uppercase;
-   padding:6px 16px; border-radius:50px; margin-bottom:16px;
- }
- .result-title { font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:300; color:var(--text); margin-bottom:6px; }
- .result-subtitle { font-size:14px; color:var(--text-light); font-weight:300; }
+/* Copy button */
+.copy-result-btn {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  width:100%; padding:13px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  color:var(--black); border:none; border-radius:12px;
+  font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700;
+  cursor:pointer; margin-bottom:8px; transition:all 0.2s;
+  box-shadow:0 4px 14px rgba(201,168,76,.3);
+}
+.copy-result-btn:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(201,168,76,.4); }
+.copy-result-btn svg { width:16px; height:16px; stroke:var(--black); flex-shrink:0; }
+.copy-feedback { text-align:center; font-size:12px; color:#10b981; font-weight:600; min-height:1.3rem; margin-bottom:16px; opacity:0; transition:opacity .3s; }
+.copy-feedback.visible { opacity:1; }
 
- /* Portrait */
- .portrait-card {
-   background:var(--card); border:1.5px solid var(--border);
-   border-radius:20px; padding:32px; margin-bottom:16px;
-   box-shadow:0 8px 32px var(--shadow);
- }
- .portrait-name {
-   font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:600;
-   color:var(--gold); margin-bottom:4px;
- }
- .portrait-meta { font-size:13px; color:var(--text-light); margin-bottom:20px; font-weight:300; letter-spacing:.5px; }
- .portrait-bio {
-   font-family:'Cormorant Garamond',serif; font-size:18px; font-style:italic;
-   line-height:1.8; color:var(--text); font-weight:300;
-   border-left:3px solid var(--gold-light); padding-left:18px;
- }
+/* Portrait */
+.portrait-card {
+  background:var(--card); border:1.5px solid var(--beige);
+  border-radius:18px; padding:28px; margin-bottom:14px;
+  box-shadow:0 6px 24px var(--shadow);
+}
+.portrait-name { font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:var(--gold); margin-bottom:4px; }
+.portrait-meta { font-size:12px; color:var(--text-light); margin-bottom:18px; font-family:'DM Mono',monospace; letter-spacing:.5px; }
+.portrait-bio {
+  font-family:'Playfair Display',serif; font-size:17px; font-style:italic;
+  line-height:1.8; color:var(--text); font-weight:400;
+  border-left:3px solid var(--gold-light); padding-left:16px;
+}
+.portrait-context {
+  margin-top:18px; padding:14px 16px;
+  background:var(--beige); border-radius:10px;
+  font-size:14px; color:var(--text); line-height:1.75;
+}
 
- /* Guide blocks */
- .guide-block {
-   background:var(--card); border:1.5px solid var(--border);
-   border-radius:18px; margin-bottom:14px;
-   box-shadow:0 4px 16px var(--shadow);
-   overflow:hidden;
- }
- .guide-block-header {
-   background:linear-gradient(135deg, #F7F2EA, #EDE4D3);
-   padding:16px 24px 14px;
-   border-bottom:1px solid var(--border);
-   display:flex; align-items:center; gap:12px;
- }
- .guide-block-num {
-   font-family:'Cormorant Garamond',serif;
-   font-size:28px; font-weight:600; color:var(--gold-light);
-   line-height:1; flex-shrink:0; min-width:28px;
- }
- .guide-block-title-wrap {}
- .guide-block-label {
-   font-size:10px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase;
-   color:var(--gold); margin-bottom:3px;
- }
- .guide-block-title {
-   font-family:'Cormorant Garamond',serif;
-   font-size:20px; font-weight:600; color:var(--text); line-height:1.2;
- }
- .guide-block-body { padding:22px 24px; display:grid; gap:16px; }
+/* Guide blocks */
+.guide-block {
+  background:var(--card); border:1.5px solid var(--beige);
+  border-radius:16px; margin-bottom:12px;
+  box-shadow:0 4px 14px var(--shadow); overflow:hidden;
+}
+.guide-block-header {
+  background:linear-gradient(135deg,var(--gold-pale),var(--beige));
+  padding:16px 22px 14px;
+  border-bottom:1px solid var(--beige);
+  display:flex; align-items:center; gap:14px;
+}
+.guide-block-num {
+  font-family:'Playfair Display',serif;
+  font-size:32px; font-weight:900; color:rgba(201,168,76,0.4);
+  line-height:1; flex-shrink:0; min-width:32px;
+}
+.guide-block-label { font-size:10px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--gold); margin-bottom:3px; }
+.guide-block-title { font-family:'Playfair Display',serif; font-size:19px; font-weight:700; color:var(--text); line-height:1.2; }
+.guide-block-body { padding:20px 22px; display:grid; gap:14px; }
 
- /* Sub-sections inside guide blocks */
- .guide-sub { }
- .guide-sub-title {
-   font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase;
-   color:var(--gold-dark); margin-bottom:8px;
- }
- .guide-sub-text {
-   font-size:15px; color:var(--text); line-height:1.8; font-weight:300;
- }
- .guide-sub-text strong { color:var(--text); font-weight:500; }
- .guide-sub-text em { color:var(--gold-dark); font-style:normal; font-weight:500; }
+.guide-sub-title { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gold-dark); margin-bottom:8px; }
+.guide-sub-text { font-size:14px; color:var(--text); line-height:1.8; }
+.guide-sub-text em { color:var(--gold-dark); font-style:normal; font-weight:600; }
 
- /* Action items */
- .action-list { display:grid; gap:10px; margin-top:4px; }
- .action-item {
-   display:flex; gap:12px; align-items:flex-start;
-   background:var(--bg); border-radius:10px; padding:12px 16px;
- }
- .action-num {
-   font-family:'Cormorant Garamond',serif;
-   font-size:18px; font-weight:600; color:var(--gold);
-   line-height:1.2; flex-shrink:0; min-width:20px;
- }
- .action-text { font-size:14px; color:var(--text); line-height:1.7; font-weight:300; }
- .action-text strong { color:var(--gold-dark); font-weight:500; }
+/* Action items */
+.action-list { display:grid; gap:9px; margin-top:4px; }
+.action-item { display:flex; gap:12px; align-items:flex-start; background:var(--cream); border-radius:10px; padding:12px 14px; }
+.action-num { font-family:'DM Mono',monospace; font-size:11px; font-weight:700; color:var(--gold); line-height:1.5; flex-shrink:0; min-width:18px; }
+.action-text { font-size:13px; color:var(--text); line-height:1.7; }
+.action-text strong { color:var(--gold-dark); font-weight:600; }
 
- /* Hook box */
- .hook-box {
-   background:linear-gradient(135deg,var(--gold-dark),var(--gold));
-   border-radius:14px; padding:24px 28px; margin-bottom:14px;
- }
- .hook-label { font-size:10px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; color:rgba(255,255,255,.65); margin-bottom:10px; }
- .hook-text {
-   font-family:'Cormorant Garamond',serif;
-   font-size:22px; font-style:italic; color:white; line-height:1.55;
-   margin-bottom:12px;
- }
- .hook-why { font-size:13px; color:rgba(255,255,255,.75); line-height:1.6; font-weight:300; }
+/* Hook box */
+.hook-box {
+  background:linear-gradient(135deg,var(--black),#2a1a08);
+  border-radius:14px; padding:24px 26px; margin-bottom:12px;
+  border:1px solid rgba(201,168,76,0.2);
+}
+.hook-label { font-size:10px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:rgba(201,168,76,0.7); margin-bottom:10px; }
+.hook-text { font-family:'Playfair Display',serif; font-size:21px; font-style:italic; color:var(--gold-light); line-height:1.55; margin-bottom:12px; }
+.hook-why { font-size:13px; color:rgba(250,246,239,0.6); line-height:1.6; }
 
- /* Separateur de section */
- .section-sep {
-   text-align:center; margin:28px 0 20px;
-   font-size:11px; font-weight:600; letter-spacing:3px; text-transform:uppercase;
-   color:var(--text-light);
-   display:flex; align-items:center; gap:14px;
- }
- .section-sep::before, .section-sep::after {
-   content:''; flex:1; height:1px; background:var(--border);
- }
+/* Error box */
+.error-box { background:linear-gradient(135deg,var(--gold-pale),rgba(232,204,128,0.2)); padding:14px 16px; border-radius:10px; border-left:3px solid var(--gold); font-size:14px; color:var(--text); line-height:1.75; }
 
- .restart-btn {
-   display:block; width:100%; padding:16px;
-   background:transparent; border:1.5px solid var(--border);
-   border-radius:50px; color:var(--text-light);
-   font-family:'Jost',sans-serif; font-size:13px; font-weight:500;
-   letter-spacing:1px; text-transform:uppercase;
-   cursor:pointer; transition:all .25s; margin-top:20px;
- }
- .restart-btn:hover { border-color:var(--gold-light); color:var(--gold); }
+/* Section sep */
+.section-sep {
+  text-align:center; margin:24px 0 18px;
+  font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+  color:var(--text-light); display:flex; align-items:center; gap:14px;
+  font-family:'DM Mono',monospace;
+}
+.section-sep::before,.section-sep::after { content:''; flex:1; height:1px; background:var(--beige); }
+
+.restart-btn {
+  display:block; width:100%; padding:14px;
+  background:transparent; border:1.5px solid var(--beige);
+  border-radius:50px; color:var(--text-light);
+  font-family:'Space Grotesk',sans-serif; font-size:13px; font-weight:500;
+  letter-spacing:1px; text-transform:uppercase;
+  cursor:pointer; transition:all .25s; margin-top:16px;
+}
+.restart-btn:hover { border-color:var(--gold); color:var(--gold); }
+
+@media (max-width:480px) {
+  .header { padding:36px 16px 28px; }
+  .step, .nav, #result { padding-left:16px; padding-right:16px; }
+  .guide-block-body { padding:16px; }
+  .portrait-card { padding:20px; }
+}
 </style>
 </head>
 <body>
 
+<!-- ── BACK BAR ── -->
+<div class="back-bar">
+  <a href="https://kcoaching02.github.io/BAP_SOUS-MENU-LES-BASES/" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Retour aux Bases
+  </a>
+</div>
+
+<!-- ── HEADER ── -->
 <div class="header">
- <div class="brand">Brille & Vibre</div>
- <div class="logo-circle">
- <img src="desert.jpeg" alt="Brille & Vibre" />
- </div>
- <h1>Mon Client<br><em>Idéal</em></h1>
- <div class="divider"></div>
- <p>10 questions pour générer ton persona personnalisé</p>
+  <div class="logo-ring">
+    <img src="desert.jpeg" alt="Brille & Vibre" class="logo-img">
+  </div>
+  <div class="brand">Brille &amp; Vibre</div>
+  <h1>Mon Client<br><em>Idéal</em></h1>
+  <div class="divider"></div>
+  <p>10 questions pour générer ton persona personnalisé</p>
 </div>
 
+<!-- ── PROGRESS ── -->
 <div class="progress-bar">
- <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
- <div class="progress-label">
- <span id="progressText">Question 1 sur 10</span>
- <span id="progressPct">0%</span>
- </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-label">
+    <span id="progressText">Question 1 sur 10</span>
+    <span id="progressPct">0%</span>
+  </div>
 </div>
 
-<!-- Q1 : Situation -->
+<!-- Q1 -->
 <div class="step active" id="step-1">
- <div class="step-header">
- <div class="step-number">Question 01 — Situation</div>
- <div class="step-title">Ton client idéal, il fait quoi dans la vie aujourd'hui ?</div>
- <div class="step-subtitle">Plusieurs choix possibles</div>
- </div>
- <div class="options-grid">
- <div class="option" data-step="1" data-value="salarie" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Salarié</div></div></div>
- <div class="option" data-step="1" data-value="chomage" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Au chômage</div></div></div>
- <div class="option" data-step="1" data-value="etudiant" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Étudiant</div></div></div>
- <div class="option" data-step="1" data-value="reconversion" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">En reconversion</div></div></div>
- <div class="option" data-step="1" data-value="entrepreneur" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Entrepreneur</div></div></div>
- <div class="option" data-step="1" data-value="maman-solo" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Maman solo</div></div></div>
- <div class="option" data-step="1" data-value="autre-1" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Autre</div></div></div>
- </div>
+  <div class="step-number">Question 01 — Situation</div>
+  <div class="step-title">Ton client idéal, il fait quoi dans la vie aujourd'hui ?</div>
+  <div class="step-subtitle">Plusieurs choix possibles</div>
+  <div class="options-grid">
+    <div class="option" data-step="1" data-value="salarie" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Salarié</div></div>
+    <div class="option" data-step="1" data-value="chomage" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Au chômage</div></div>
+    <div class="option" data-step="1" data-value="etudiant" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Étudiant</div></div>
+    <div class="option" data-step="1" data-value="reconversion" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">En reconversion</div></div>
+    <div class="option" data-step="1" data-value="entrepreneur" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Entrepreneur</div></div>
+    <div class="option" data-step="1" data-value="maman-solo" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Maman solo</div></div>
+    <div class="option" data-step="1" data-value="autre-1" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Autre</div></div>
+  </div>
 </div>
 
-<!-- Q2 : Motivation -->
+<!-- Q2 -->
 <div class="step" id="step-2">
- <div class="step-header">
- <div class="step-number">Question 02 — Motivation</div>
- <div class="step-title">Pourquoi veut-il changer sa situation ?</div>
- <div class="step-subtitle">Plusieurs choix possibles</div>
- </div>
- <div class="options-grid">
- <div class="option" data-step="2" data-value="revenu-plaisir" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il veut un revenu complémentaire pour voyager, se faire plaisir, faire des cadeaux</div></div></div>
- <div class="option" data-step="2" data-value="stress-argent" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il est stressé quand il passe à la caisse ou quand il reçoit une facture</div></div></div>
- <div class="option" data-step="2" data-value="liberte" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il n'a pas assez de liberté</div></div></div>
- <div class="option" data-step="2" data-value="epuise-salariat" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il est épuisé du salariat</div></div></div>
- <div class="option" data-step="2" data-value="temps-famille" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il ne veut plus manquer de temps pour lui et sa famille</div></div></div>
- <div class="option" data-step="2" data-value="nomade" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il veut travailler de n'importe où</div></div></div>
- <div class="option" data-step="2" data-value="quitter-emploi" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il veut quitter son emploi et travailler pour lui</div></div></div>
- <div class="option" data-step="2" data-value="autre-2" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Autre</div></div></div>
- </div>
+  <div class="step-number">Question 02 — Motivation</div>
+  <div class="step-title">Pourquoi veut-il changer sa situation ?</div>
+  <div class="step-subtitle">Plusieurs choix possibles</div>
+  <div class="options-grid">
+    <div class="option" data-step="2" data-value="revenu-plaisir" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il veut un revenu complémentaire pour voyager, se faire plaisir, faire des cadeaux</div></div>
+    <div class="option" data-step="2" data-value="stress-argent" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il est stressé quand il passe à la caisse ou quand il reçoit une facture</div></div>
+    <div class="option" data-step="2" data-value="liberte" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il n'a pas assez de liberté</div></div>
+    <div class="option" data-step="2" data-value="epuise-salariat" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il est épuisé du salariat</div></div>
+    <div class="option" data-step="2" data-value="temps-famille" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il ne veut plus manquer de temps pour lui et sa famille</div></div>
+    <div class="option" data-step="2" data-value="nomade" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il veut travailler de n'importe où</div></div>
+    <div class="option" data-step="2" data-value="quitter-emploi" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il veut quitter son emploi et travailler pour lui</div></div>
+    <div class="option" data-step="2" data-value="autre-2" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Autre</div></div>
+  </div>
 </div>
 
-<!-- Q3 : Freins -->
+<!-- Q3 -->
 <div class="step" id="step-3">
- <div class="step-header">
- <div class="step-number">Question 03 — Freins</div>
- <div class="step-title">Qu'est-ce qui l'empêche de se lancer ?</div>
- <div class="step-subtitle">Plusieurs choix possibles</div>
- </div>
- <div class="options-grid">
- <div class="option" data-step="3" data-value="peur-depenser" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il a peur de dépenser de l'argent pour rien</div></div></div>
- <div class="option" data-step="3" data-value="peur-echouer" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il a peur de ne pas y arriver</div></div></div>
- <div class="option" data-step="3" data-value="pas-temps" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il n'a pas le temps</div></div></div>
- <div class="option" data-step="3" data-value="ne-sait-pas" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il ne sait pas par où commencer</div></div></div>
- <div class="option" data-step="3" data-value="peur-regard" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il a peur du regard des autres</div></div></div>
- <div class="option" data-step="3" data-value="attend-moment" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il attend le bon moment</div></div></div>
- <div class="option" data-step="3" data-value="autre-3" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Autre</div></div></div>
- </div>
+  <div class="step-number">Question 03 — Freins</div>
+  <div class="step-title">Qu'est-ce qui l'empêche de se lancer ?</div>
+  <div class="step-subtitle">Plusieurs choix possibles</div>
+  <div class="options-grid">
+    <div class="option" data-step="3" data-value="peur-depenser" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il a peur de dépenser de l'argent pour rien</div></div>
+    <div class="option" data-step="3" data-value="peur-echouer" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il a peur de ne pas y arriver</div></div>
+    <div class="option" data-step="3" data-value="pas-temps" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il n'a pas le temps</div></div>
+    <div class="option" data-step="3" data-value="ne-sait-pas" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il ne sait pas par où commencer</div></div>
+    <div class="option" data-step="3" data-value="peur-regard" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il a peur du regard des autres</div></div>
+    <div class="option" data-step="3" data-value="attend-moment" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il attend le bon moment</div></div>
+    <div class="option" data-step="3" data-value="autre-3" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Autre</div></div>
+  </div>
 </div>
 
-<!-- Q4 : Justifications -->
+<!-- Q4 -->
 <div class="step" id="step-4">
- <div class="step-header">
- <div class="step-number">Question 04 — Justifications</div>
- <div class="step-title">Qu'est-ce qu'il se dit pour justifier de ne pas se lancer ?</div>
- <div class="step-subtitle">Plusieurs choix possibles</div>
- </div>
- <div class="options-grid">
- <div class="option" data-step="4" data-value="seul" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Je trouverai comment faire tout seul</div></div></div>
- <div class="option" data-step="4" data-value="pas-bon-moment" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Ce n'est pas le bon moment</div></div></div>
- <div class="option" data-step="4" data-value="attendre-argent" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">J'attends d'avoir plus d'argent</div></div></div>
- <div class="option" data-step="4" data-value="attendre-temps" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">J'attends d'avoir plus de temps</div></div></div>
- <div class="option" data-step="4" data-value="pas-pour-moi" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Ça ne marchera pas pour moi</div></div></div>
- <div class="option" data-step="4" data-value="pas-fait" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Je ne suis pas fait pour ça</div></div></div>
- <div class="option" data-step="4" data-value="regarde-encore" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Je continue de regarder pour voir</div></div></div>
- <div class="option" data-step="4" data-value="autre-4" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Autre</div></div></div>
- </div>
+  <div class="step-number">Question 04 — Justifications</div>
+  <div class="step-title">Qu'est-ce qu'il se dit pour justifier de ne pas se lancer ?</div>
+  <div class="step-subtitle">Plusieurs choix possibles</div>
+  <div class="options-grid">
+    <div class="option" data-step="4" data-value="seul" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Je trouverai comment faire tout seul</div></div>
+    <div class="option" data-step="4" data-value="pas-bon-moment" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Ce n'est pas le bon moment</div></div>
+    <div class="option" data-step="4" data-value="attendre-argent" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">J'attends d'avoir plus d'argent</div></div>
+    <div class="option" data-step="4" data-value="attendre-temps" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">J'attends d'avoir plus de temps</div></div>
+    <div class="option" data-step="4" data-value="pas-pour-moi" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Ça ne marchera pas pour moi</div></div>
+    <div class="option" data-step="4" data-value="pas-fait" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Je ne suis pas fait pour ça</div></div>
+    <div class="option" data-step="4" data-value="regarde-encore" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Je continue de regarder pour voir</div></div>
+    <div class="option" data-step="4" data-value="autre-4" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Autre</div></div>
+  </div>
 </div>
 
-<!-- Q5 : Ressenti -->
+<!-- Q5 -->
 <div class="step" id="step-5">
- <div class="step-header">
- <div class="step-number">Question 05 — Ressenti</div>
- <div class="step-title">Qu'est-ce qu'il ressent au quotidien dans sa situation actuelle ?</div>
- <div class="step-subtitle">Plusieurs choix possibles</div>
- </div>
- <div class="options-grid">
- <div class="option" data-step="5" data-value="epuise-continue" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il est épuisé mais il continue parce qu'il n'a pas le choix</div></div></div>
- <div class="option" data-step="5" data-value="coincé" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il se sent coincé dans une vie qui ne lui correspond plus</div></div></div>
- <div class="option" data-step="5" data-value="culpabilise-famille" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il culpabilise de ne pas être assez présent pour sa famille</div></div></div>
- <div class="option" data-step="5" data-value="travaille-pour-rien" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il a l'impression de travailler pour rien</div></div></div>
- <div class="option" data-step="5" data-value="jalousie" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il voit les autres réussir et se demande pourquoi pas lui</div></div></div>
- <div class="option" data-step="5" data-value="perdu" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il est perdu, il ne sait pas par où commencer</div></div></div>
- <div class="option" data-step="5" data-value="autre-5" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Autre</div></div></div>
- </div>
+  <div class="step-number">Question 05 — Ressenti</div>
+  <div class="step-title">Qu'est-ce qu'il ressent au quotidien dans sa situation actuelle ?</div>
+  <div class="step-subtitle">Plusieurs choix possibles</div>
+  <div class="options-grid">
+    <div class="option" data-step="5" data-value="epuise-continue" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il est épuisé mais il continue parce qu'il n'a pas le choix</div></div>
+    <div class="option" data-step="5" data-value="coincé" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il se sent coincé dans une vie qui ne lui correspond plus</div></div>
+    <div class="option" data-step="5" data-value="culpabilise-famille" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il culpabilise de ne pas être assez présent pour sa famille</div></div>
+    <div class="option" data-step="5" data-value="travaille-pour-rien" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il a l'impression de travailler pour rien</div></div>
+    <div class="option" data-step="5" data-value="jalousie" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il voit les autres réussir et se demande pourquoi pas lui</div></div>
+    <div class="option" data-step="5" data-value="perdu" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il est perdu, il ne sait pas par où commencer</div></div>
+    <div class="option" data-step="5" data-value="autre-5" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Autre</div></div>
+  </div>
 </div>
 
-<!-- Q6 : 1000€ de plus -->
+<!-- Q6 -->
 <div class="step" id="step-6">
- <div class="step-header">
- <div class="step-number">Question 06 — Projection</div>
- <div class="step-title">Si demain il gagne 1 000 € de plus par mois, qu'est-ce qu'il fait avec ?</div>
- <div class="step-subtitle">Plusieurs choix possibles</div>
- </div>
- <div class="options-grid">
- <div class="option" data-step="6" data-value="voyage" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il part en voyage</div></div></div>
- <div class="option" data-step="6" data-value="caisse" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il arrête de compter à la caisse</div></div></div>
- <div class="option" data-step="6" data-value="factures" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il stresse moins pour ses factures</div></div></div>
- <div class="option" data-step="6" data-value="cadeaux" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il fait des cadeaux à ses proches</div></div></div>
- <div class="option" data-step="6" data-value="epargne" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il met de côté pour se sécuriser</div></div></div>
- <div class="option" data-step="6" data-value="reduit-heures" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il réduit ses heures de travail</div></div></div>
- <div class="option" data-step="6" data-value="quitte-progressif" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il quitte son emploi progressivement</div></div></div>
- <div class="option" data-step="6" data-value="autre-6" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Autre</div></div></div>
- </div>
+  <div class="step-number">Question 06 — Projection</div>
+  <div class="step-title">Si demain il gagne 1 000 € de plus par mois, qu'est-ce qu'il fait avec ?</div>
+  <div class="step-subtitle">Plusieurs choix possibles</div>
+  <div class="options-grid">
+    <div class="option" data-step="6" data-value="voyage" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il part en voyage</div></div>
+    <div class="option" data-step="6" data-value="caisse" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il arrête de compter à la caisse</div></div>
+    <div class="option" data-step="6" data-value="factures" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il stresse moins pour ses factures</div></div>
+    <div class="option" data-step="6" data-value="cadeaux" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il fait des cadeaux à ses proches</div></div>
+    <div class="option" data-step="6" data-value="epargne" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il met de côté pour se sécuriser</div></div>
+    <div class="option" data-step="6" data-value="reduit-heures" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il réduit ses heures de travail</div></div>
+    <div class="option" data-step="6" data-value="quitte-progressif" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il quitte son emploi progressivement</div></div>
+    <div class="option" data-step="6" data-value="autre-6" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Autre</div></div>
+  </div>
 </div>
 
-<!-- Q7 : Attirance -->
+<!-- Q7 -->
 <div class="step" id="step-7">
- <div class="step-header">
- <div class="step-number">Question 07 — Déclencheur</div>
- <div class="step-title">Qu'est-ce qui l'a déjà attiré vers cette idée de gagner de l'argent en ligne ?</div>
- <div class="step-subtitle">Plusieurs choix possibles</div>
- </div>
- <div class="options-grid">
- <div class="option" data-step="7" data-value="vu-reussir" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il a vu quelqu'un réussir et ça lui a donné envie</div></div></div>
- <div class="option" data-step="7" data-value="suit-comptes" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il suit des comptes de personnes qui ont lancé un business en ligne</div></div></div>
- <div class="option" data-step="7" data-value="entendu-parler" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il en a entendu parler autour de lui</div></div></div>
- <div class="option" data-step="7" data-value="tombe-dessus" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il cherchait une solution et il est tombé dessus</div></div></div>
- <div class="option" data-step="7" data-value="pense-longtemps" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il y pense depuis longtemps mais n'a jamais sauté le pas</div></div></div>
- <div class="option" data-step="7" data-value="business-existant" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il a déjà un business mais n'arrive pas à en vivre</div></div></div>
- <div class="option" data-step="7" data-value="autre-7" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Autre</div></div></div>
- </div>
+  <div class="step-number">Question 07 — Déclencheur</div>
+  <div class="step-title">Qu'est-ce qui l'a déjà attiré vers cette idée de gagner de l'argent en ligne ?</div>
+  <div class="step-subtitle">Plusieurs choix possibles</div>
+  <div class="options-grid">
+    <div class="option" data-step="7" data-value="vu-reussir" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il a vu quelqu'un réussir et ça lui a donné envie</div></div>
+    <div class="option" data-step="7" data-value="suit-comptes" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il suit des comptes de personnes qui ont lancé un business en ligne</div></div>
+    <div class="option" data-step="7" data-value="entendu-parler" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il en a entendu parler autour de lui</div></div>
+    <div class="option" data-step="7" data-value="tombe-dessus" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il cherchait une solution et il est tombé dessus</div></div>
+    <div class="option" data-step="7" data-value="pense-longtemps" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il y pense depuis longtemps mais n'a jamais sauté le pas</div></div>
+    <div class="option" data-step="7" data-value="business-existant" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il a déjà un business mais n'arrive pas à en vivre</div></div>
+    <div class="option" data-step="7" data-value="autre-7" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Autre</div></div>
+  </div>
 </div>
 
-<!-- Q8 : Peur si rien ne change -->
+<!-- Q8 -->
 <div class="step" id="step-8">
- <div class="step-header">
- <div class="step-number">Question 08 — Urgence</div>
- <div class="step-title">Si rien ne change dans 1 an, de quoi aura-t-il peur ?</div>
- <div class="step-subtitle">Plusieurs choix possibles</div>
- </div>
- <div class="options-grid">
- <div class="option" data-step="8" data-value="subir-vie" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">De continuer à subir une vie qui ne lui correspond pas</div></div></div>
- <div class="option" data-step="8" data-value="jamais-courage" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">De ne jamais avoir le courage de se lancer</div></div></div>
- <div class="option" data-step="8" data-value="rater-opportunite" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">De rater une opportunité qu'il regrettera</div></div></div>
- <div class="option" data-step="8" data-value="bloque-financier" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">De rester bloqué financièrement</div></div></div>
- <div class="option" data-step="8" data-value="autres-avancent" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">De voir les autres avancer pendant qu'il reste sur place</div></div></div>
- <div class="option" data-step="8" data-value="autre-8" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Autre</div></div></div>
- </div>
+  <div class="step-number">Question 08 — Urgence</div>
+  <div class="step-title">Si rien ne change dans 1 an, de quoi aura-t-il peur ?</div>
+  <div class="step-subtitle">Plusieurs choix possibles</div>
+  <div class="options-grid">
+    <div class="option" data-step="8" data-value="subir-vie" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">De continuer à subir une vie qui ne lui correspond pas</div></div>
+    <div class="option" data-step="8" data-value="jamais-courage" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">De ne jamais avoir le courage de se lancer</div></div>
+    <div class="option" data-step="8" data-value="rater-opportunite" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">De rater une opportunité qu'il regrettera</div></div>
+    <div class="option" data-step="8" data-value="bloque-financier" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">De rester bloqué financièrement</div></div>
+    <div class="option" data-step="8" data-value="autres-avancent" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">De voir les autres avancer pendant qu'il reste sur place</div></div>
+    <div class="option" data-step="8" data-value="autre-8" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Autre</div></div>
+  </div>
 </div>
 
-<!-- Q9 : Ne plus jamais -->
+<!-- Q9 -->
 <div class="step" id="step-9">
- <div class="step-header">
- <div class="step-number">Question 09 — Rupture</div>
- <div class="step-title">Qu'est-ce que ton client idéal ne veut plus jamais revivre ?</div>
- <div class="step-subtitle">Plusieurs choix possibles</div>
- </div>
- <div class="options-grid">
- <div class="option" data-step="9" data-value="stress-fin-mois" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Le stress des fins de mois</div></div></div>
- <div class="option" data-step="9" data-value="dependre-patron" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Dépendre d'un patron ou d'horaires imposés</div></div></div>
- <div class="option" data-step="9" data-value="sans-perspective" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Se sentir coincé sans perspective</div></div></div>
- <div class="option" data-step="9" data-value="sacrifier-famille" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Sacrifier sa famille pour son travail</div></div></div>
- <div class="option" data-step="9" data-value="illégitime" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Se sentir illégitime et incapable</div></div></div>
- <div class="option" data-step="9" data-value="autre-9" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Autre</div></div></div>
- </div>
+  <div class="step-number">Question 09 — Rupture</div>
+  <div class="step-title">Qu'est-ce que ton client idéal ne veut plus jamais revivre ?</div>
+  <div class="step-subtitle">Plusieurs choix possibles</div>
+  <div class="options-grid">
+    <div class="option" data-step="9" data-value="stress-fin-mois" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Le stress des fins de mois</div></div>
+    <div class="option" data-step="9" data-value="dependre-patron" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Dépendre d'un patron ou d'horaires imposés</div></div>
+    <div class="option" data-step="9" data-value="sans-perspective" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Se sentir coincé sans perspective</div></div>
+    <div class="option" data-step="9" data-value="sacrifier-famille" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Sacrifier sa famille pour son travail</div></div>
+    <div class="option" data-step="9" data-value="illégitime" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Se sentir illégitime et incapable</div></div>
+    <div class="option" data-step="9" data-value="autre-9" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Autre</div></div>
+  </div>
 </div>
 
-<!-- Q10 : Si réussite -->
+<!-- Q10 -->
 <div class="step" id="step-10">
- <div class="step-header">
- <div class="step-number">Question 10 — Vision</div>
- <div class="step-title">Qu'est-ce qui changerait dans sa vie s'il réussissait ?</div>
- <div class="step-subtitle">Plusieurs choix possibles</div>
- </div>
- <div class="options-grid">
- <div class="option" data-step="10" data-value="temps-famille-v" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il aurait enfin du temps pour lui et sa famille</div></div></div>
- <div class="option" data-step="10" data-value="plus-stress-argent" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il ne stresserait plus pour l'argent</div></div></div>
- <div class="option" data-step="10" data-value="fierte" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il serait fier de lui et de ce qu'il a construit</div></div></div>
- <div class="option" data-step="10" data-value="ses-regles" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il vivrait selon ses propres règles</div></div></div>
- <div class="option" data-step="10" data-value="inspirer" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Il inspirerait les gens autour de lui</div></div></div>
- <div class="option" data-step="10" data-value="autre-10" onclick="toggle(this)"><div class="option-check"></div><div class="option-text"><div class="option-label">Autre</div></div></div>
- </div>
+  <div class="step-number">Question 10 — Vision</div>
+  <div class="step-title">Qu'est-ce qui changerait dans sa vie s'il réussissait ?</div>
+  <div class="step-subtitle">Plusieurs choix possibles</div>
+  <div class="options-grid">
+    <div class="option" data-step="10" data-value="temps-famille-v" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il aurait enfin du temps pour lui et sa famille</div></div>
+    <div class="option" data-step="10" data-value="plus-stress-argent" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il ne stresserait plus pour l'argent</div></div>
+    <div class="option" data-step="10" data-value="fierte" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il serait fier de lui et de ce qu'il a construit</div></div>
+    <div class="option" data-step="10" data-value="ses-regles" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il vivrait selon ses propres règles</div></div>
+    <div class="option" data-step="10" data-value="inspirer" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Il inspirerait les gens autour de lui</div></div>
+    <div class="option" data-step="10" data-value="autre-10" onclick="toggle(this)"><div class="option-check"></div><div class="option-label">Autre</div></div>
+  </div>
 </div>
 
 <!-- RESULT -->
@@ -463,18 +483,23 @@
   <div class="result-header">
     <div class="result-badge">Analyse complète</div>
     <div class="result-title">Ton Client Idéal</div>
-    <div class="result-subtitle">Portrait psychologique · Stratégie de contenu · Guide d'action</div>
+    <div class="result-subtitle">Portrait · Psychologie · Stratégie · Plan d'action</div>
   </div>
+  <button class="copy-result-btn" id="copyResultBtn" onclick="copyResult()">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+    Copier l'analyse complète
+  </button>
+  <div class="copy-feedback" id="copyFeedback">✅ Analyse copiée ! Colle-la dans Notion, Google Docs ou tes notes.</div>
   <div id="portraitBlock"></div>
   <div class="section-sep">Guide stratégique</div>
   <div id="guideBlocks"></div>
   <button class="restart-btn" onclick="restart()">← Recommencer</button>
 </div>
 
-<!-- Nav -->
+<!-- NAV -->
 <div class="nav" id="navBar">
- <button class="btn btn-prev" id="btnPrev" onclick="prevStep()" style="visibility:hidden">← Précédent</button>
- <button class="btn btn-next" id="btnNext" onclick="nextStep()">Suivant →</button>
+  <button class="btn btn-prev" id="btnPrev" onclick="prevStep()" style="visibility:hidden">← Précédent</button>
+  <button class="btn btn-next" id="btnNext" onclick="nextStep()">Suivant →</button>
 </div>
 <div class="skip-hint" id="skipHint">Tu peux passer cette étape si elle ne correspond pas</div>
 
@@ -485,210 +510,137 @@ let answers = {};
 for (let i = 1; i <= TOTAL; i++) answers[i] = [];
 
 function toggle(el) {
- el.classList.toggle('selected');
- const s = parseInt(el.dataset.step), v = el.dataset.value;
- if (el.classList.contains('selected')) { if (!answers[s].includes(v)) answers[s].push(v); }
- else { answers[s] = answers[s].filter(x => x !== v); }
+  el.classList.toggle('selected');
+  const s = parseInt(el.dataset.step), v = el.dataset.value;
+  if (el.classList.contains('selected')) { if (!answers[s].includes(v)) answers[s].push(v); }
+  else { answers[s] = answers[s].filter(x => x !== v); }
 }
 
 function updateProgress() {
- const pct = Math.round(((current - 1) / TOTAL) * 100);
- document.getElementById('progressFill').style.width = pct + '%';
- document.getElementById('progressText').textContent = `Question ${current} sur ${TOTAL}`;
- document.getElementById('progressPct').textContent = pct + '%';
+  const pct = Math.round(((current - 1) / TOTAL) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `Question ${current} sur ${TOTAL}`;
+  document.getElementById('progressPct').textContent = pct + '%';
 }
 
 function nextStep() {
- if (current < TOTAL) {
- document.getElementById('step-' + current).classList.remove('active');
- current++;
- document.getElementById('step-' + current).classList.add('active');
- document.getElementById('btnPrev').style.visibility = 'visible';
- if (current === TOTAL) document.getElementById('btnNext').textContent = 'Générer mon persona ';
- updateProgress();
- window.scrollTo({ top: 0, behavior: 'smooth' });
- } else { generate(); }
+  if (current < TOTAL) {
+    document.getElementById('step-' + current).classList.remove('active');
+    current++;
+    document.getElementById('step-' + current).classList.add('active');
+    document.getElementById('btnPrev').style.visibility = 'visible';
+    if (current === TOTAL) document.getElementById('btnNext').textContent = 'Générer mon persona ✨';
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else { generate(); }
 }
 
 function prevStep() {
- if (current > 1) {
- document.getElementById('step-' + current).classList.remove('active');
- current--;
- document.getElementById('step-' + current).classList.add('active');
- if (current === 1) document.getElementById('btnPrev').style.visibility = 'hidden';
- document.getElementById('btnNext').textContent = 'Suivant →';
- updateProgress();
- window.scrollTo({ top: 0, behavior: 'smooth' });
- }
+  if (current > 1) {
+    document.getElementById('step-' + current).classList.remove('active');
+    current--;
+    document.getElementById('step-' + current).classList.add('active');
+    if (current === 1) document.getElementById('btnPrev').style.visibility = 'hidden';
+    document.getElementById('btnNext').textContent = 'Suivant →';
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
 
 function restart() {
- for (let i = 1; i <= TOTAL; i++) {
- answers[i] = [];
- document.querySelectorAll(`[data-step="${i}"]`).forEach(o => o.classList.remove('selected'));
- }
- current = 1;
- document.getElementById('result').style.display = 'none';
- document.getElementById('step-1').classList.add('active');
- document.getElementById('navBar').style.display = 'flex';
- document.getElementById('skipHint').style.display = 'block';
- document.getElementById('btnPrev').style.visibility = 'hidden';
- document.getElementById('btnNext').textContent = 'Suivant →';
- updateProgress();
- window.scrollTo({ top: 0, behavior: 'smooth' });
+  for (let i = 1; i <= TOTAL; i++) {
+    answers[i] = [];
+    document.querySelectorAll(`[data-step="${i}"]`).forEach(o => o.classList.remove('selected'));
+  }
+  current = 1;
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('step-1').classList.add('active');
+  document.getElementById('navBar').style.display = 'flex';
+  document.getElementById('skipHint').style.display = 'block';
+  document.getElementById('btnPrev').style.visibility = 'hidden';
+  document.getElementById('btnNext').textContent = 'Suivant →';
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// 
-// MOTEUR DE GÉNÉRATION
-// 
+/* ── COPY RESULT ── */
+function copyResult() {
+  const portrait = document.getElementById('portraitBlock');
+  const guide    = document.getElementById('guideBlocks');
+  const getText  = el => el ? el.innerText : '';
+  const full = `MON CLIENT IDÉAL — Brille & Vibre\n${'─'.repeat(40)}\n\n${getText(portrait)}\n\nGUIDE STRATÉGIQUE\n${'─'.repeat(40)}\n\n${getText(guide)}`;
+  navigator.clipboard.writeText(full).then(() => {
+    const fb = document.getElementById('copyFeedback');
+    const btn = document.getElementById('copyResultBtn');
+    fb.classList.add('visible');
+    btn.textContent = '✅ Copié !';
+    setTimeout(() => { fb.classList.remove('visible'); btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copier l\'analyse complète'; }, 2500);
+  });
+}
+
+/* ── HELPERS ── */
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-function rnd(a,b) { return Math.floor(Math.random()*(b-a+1))+a; }
-function has(s,v) { return answers[s] && answers[s].includes(v); }
+function rnd(a,b)  { return Math.floor(Math.random()*(b-a+1))+a; }
+function has(s,v)  { return answers[s] && answers[s].includes(v); }
 function any(s,vs) { return vs.some(v => has(s,v)); }
 
-// Prénoms neutres variés
-const PRENOMS = ['Alex','Sam','Jordan','Morgan','Charlie','Camille','Robin',
- 'Sophie','Laura','Céline','Yasmine','Fatou','Thomas','Julien','Mehdi','Nicolas'];
-
+const PRENOMS = ['Alex','Sam','Jordan','Morgan','Charlie','Camille','Robin','Sophie','Laura','Céline','Yasmine','Fatou','Thomas','Julien','Mehdi','Nicolas'];
 function getPrenom() { return pick(PRENOMS); }
 function getAge() {
- if (has(1,'etudiant')) return rnd(19,25);
- if (has(1,'maman-solo')) return rnd(28,42);
- if (has(1,'reconversion')) return rnd(32,48);
- if (has(1,'entrepreneur')) return rnd(26,40);
- if (has(1,'salarie')) return rnd(24,44);
- return rnd(24,42);
+  if (has(1,'etudiant'))     return rnd(19,25);
+  if (has(1,'maman-solo'))   return rnd(28,42);
+  if (has(1,'reconversion')) return rnd(32,48);
+  if (has(1,'entrepreneur')) return rnd(26,40);
+  if (has(1,'salarie'))      return rnd(24,44);
+  return rnd(24,42);
 }
 
-// ═══════════════════════════════════════════════════
-// MOTEUR D'ANALYSE — Guide stratégique complet
-// 5 blocs : Portrait · Psychologie · Déclencheurs
-//           Stratégie de contenu · Plan d'action
-// ═══════════════════════════════════════════════════
-
-// ── BLOC 1 : Portrait narratif ──
+/* ── PORTRAIT ── */
 function buildPortrait(prenom, age) {
-  const situations = {
-    'salarie':      `salarié(e)`,
-    'chomage':      `en recherche d'emploi`,
-    'etudiant':     `étudiant(e)`,
-    'reconversion': `en reconversion professionnelle`,
-    'entrepreneur': `entrepreneur(e)`,
-    'maman-solo':   `maman solo`
-  };
-  const motivations = {
-    'stress-argent':   `sous pression financière permanente`,
-    'epuise-salariat': `épuisé(e) par le salariat`,
-    'temps-famille':   `en manque de temps pour sa famille`,
-    'liberte':         `à la recherche de liberté`,
-    'quitter-emploi':  `déterminé(e) à quitter son emploi`,
-    'nomade':          `attiré(e) par le travail nomade`,
-    'revenu-plaisir':  `en quête d'un revenu complémentaire`
-  };
-  const ressentis = {
-    'coincé':              `Il/elle se sent enfermé(e) dans une vie qui ne lui ressemble pas et cherche une sortie concrète.`,
-    'epuise-continue':     `Il/elle continue à avancer par obligation, épuisé(e) mais sans alternative visible — jusqu'à présent.`,
-    'travaille-pour-rien': `Il/elle a le sentiment de travailler énormément pour un résultat qui ne compense pas les sacrifices.`,
-    'culpabilise-famille': `La culpabilité de ne pas être suffisamment présent(e) pour ses proches est une douleur quotidienne.`,
-    'jalousie':            `Voir des personnes ordinaires réussir en ligne renforce chaque jour la conviction que c'est possible — et la frustration de ne pas l'avoir encore fait.`,
-    'perdu':               `Il/elle est perdu(e) face à l'abondance d'informations et ne sait pas par où commencer.`
-  };
+  const situations = { 'salarie':'salarié(e)', 'chomage':"en recherche d'emploi", 'etudiant':'étudiant(e)', 'reconversion':'en reconversion professionnelle', 'entrepreneur':'entrepreneur(e)', 'maman-solo':'maman solo' };
+  const motivations = { 'stress-argent':'sous pression financière permanente', 'epuise-salariat':'épuisé(e) par le salariat', 'temps-famille':'en manque de temps pour sa famille', 'liberte':"à la recherche de liberté", 'quitter-emploi':"déterminé(e) à quitter son emploi", 'nomade':'attiré(e) par le travail nomade', 'revenu-plaisir':"en quête d'un revenu complémentaire" };
+  const ressentis = { 'coincé':"Il/elle se sent enfermé(e) dans une vie qui ne lui ressemble pas et cherche une sortie concrète.", 'epuise-continue':"Il/elle continue à avancer par obligation, épuisé(e) mais sans alternative visible — jusqu'à présent.", 'travaille-pour-rien':"Il/elle a le sentiment de travailler énormément pour un résultat qui ne compense pas les sacrifices.", 'culpabilise-famille':"La culpabilité de ne pas être suffisamment présent(e) pour ses proches est une douleur quotidienne.", 'jalousie':"Voir des personnes ordinaires réussir en ligne renforce chaque jour la conviction que c'est possible — et la frustration de ne pas l'avoir encore fait.", 'perdu':"Il/elle est perdu(e) face à l'abondance d'informations et ne sait pas par où commencer." };
+  const visionMap = { 'voyage':'voyager', 'caisse':'ne plus stresser à la caisse', 'factures':'ouvrir ses factures sereinement', 'cadeaux':'offrir sans compter', 'epargne':'se construire une sécurité financière', 'reduit-heures':'réduire son temps de travail', 'quitte-progressif':"quitter progressivement son emploi" };
+  const ruptureMap = { 'stress-fin-mois':'le stress financier des fins de mois', 'dependre-patron':"la dépendance à un employeur", 'sans-perspective':"l'absence de perspective d'évolution", 'sacrifier-famille':'sacrifier sa vie de famille pour son travail', 'illégitime':"le sentiment d'illégitimité" };
+  const transMap = { 'temps-famille-v':'retrouver du temps pour ses proches', 'plus-stress-argent':'atteindre la sérénité financière', 'fierte':"être fier(e) de ce qu'il/elle a construit", 'ses-regles':'vivre selon ses propres règles', 'inspirer':"devenir une source d'inspiration pour son entourage" };
 
   let sit = 'en quête de changement professionnel';
   for (const [k,v] of Object.entries(situations)) { if (has(1,k)) { sit = v; break; } }
-
-  let mot = 'en quête d\'une vie différente';
+  let mot = "en quête d'une vie différente";
   for (const [k,v] of Object.entries(motivations)) { if (has(2,k)) { mot = v; break; } }
-
   let ressenti = '';
   for (const [k,v] of Object.entries(ressentis)) { if (has(5,k)) { ressenti = v; break; } }
 
-  // Vision à 1000€ — ce que ça révèle vraiment
-  const visionMap = {
-    'voyage':          `voyager`,
-    'caisse':          `ne plus stresser à la caisse`,
-    'factures':        `ouvrir ses factures sereinement`,
-    'cadeaux':         `offrir sans compter`,
-    'epargne':         `se construire une sécurité financière`,
-    'reduit-heures':   `réduire son temps de travail`,
-    'quitte-progressif':`quitter progressivement son emploi`
-  };
-  const visions = (answers[6]||[]).filter(v=>visionMap[v]).map(v=>visionMap[v]);
-  const visionStr = visions.length > 0
-    ? visions.slice(0,2).join(' et ')
-    : 'améliorer sa qualité de vie';
-
-  // Ce qu'il ne veut plus
-  const ruptureMap = {
-    'stress-fin-mois':  `le stress financier des fins de mois`,
-    'dependre-patron':  `la dépendance à un employeur`,
-    'sans-perspective': `l'absence de perspective d'évolution`,
-    'sacrifier-famille':`sacrifier sa vie de famille pour son travail`,
-    'illégitime':       `le sentiment d'illégitimité`
-  };
+  const visions  = (answers[6]||[]).filter(v=>visionMap[v]).map(v=>visionMap[v]);
   const ruptures = (answers[9]||[]).filter(v=>ruptureMap[v]).map(v=>ruptureMap[v]);
-  const ruptureStr = ruptures.length > 0
-    ? ruptures.slice(0,2).join(' et ')
-    : 'sa situation actuelle';
+  const trans    = (answers[10]||[]).filter(v=>transMap[v]).map(v=>transMap[v]);
 
-  // Transformation souhaitée
-  const transMap = {
-    'temps-famille-v':  `retrouver du temps pour ses proches`,
-    'plus-stress-argent':`atteindre la sérénité financière`,
-    'fierte':           `être fier(e) de ce qu'il/elle a construit`,
-    'ses-regles':       `vivre selon ses propres règles`,
-    'inspirer':         `devenir une source d'inspiration pour son entourage`
-  };
-  const trans = (answers[10]||[]).filter(v=>transMap[v]).map(v=>transMap[v]);
-  const transStr = trans.length > 0 ? trans[0] : 'transformer sa vie';
+  const visionStr  = visions.length  > 0 ? visions.slice(0,2).join(' et ')  : 'améliorer sa qualité de vie';
+  const ruptureStr = ruptures.length > 0 ? ruptures.slice(0,2).join(' et ') : 'sa situation actuelle';
+  const transStr   = trans.length    > 0 ? trans[0] : 'transformer sa vie';
 
   const bio = `${prenom} est ${sit}, ${mot}. Sa priorité concrète avec un revenu supplémentaire : ${visionStr}. Ce qu'il/elle refuse de continuer à subir : ${ruptureStr}. Sa définition personnelle de la réussite : ${transStr}.`;
-
-  if (ressenti) {
-    return { name: `${prenom}, ${age} ans`, bio, context: ressenti };
-  }
-  return { name: `${prenom}, ${age} ans`, bio, context: null };
+  return { name:`${prenom}, ${age} ans`, bio, context: ressenti || null };
 }
 
-// ── BLOC 2 : Analyse psychologique ──
+/* ── PSYCHOLOGIE ── */
 function buildPsycho() {
-  // Freins réels — ce qu'ils signifient vraiment
   const freinsAnalyse = {
-    'peur-depenser': {
-      surface: `Peur de perdre de l'argent`,
-      profond: `Ce frein cache souvent une blessure financière passée ou un sentiment d'insécurité profond. Ce client n'a pas peur de "perdre de l'argent" en théorie — il/elle a peur de se retrouver encore plus vulnérable qu'il/elle ne l'est déjà. Pour le/la convaincre, il ne s'agit pas de baisser le prix, mais de réduire le risque perçu : preuves sociales concrètes, résultats réalistes, accompagnement visible.`
-    },
-    'peur-echouer': {
-      surface: `Peur d'échouer`,
-      profond: `Derrière cette peur se cache souvent la peur du regard des autres plus que l'échec lui-même. Ce client imagine les "je te l'avais dit" avant même d'avoir essayé. Pour l'aider à franchir ce cap, montrez que l'échec partiel fait partie du processus — et que ceux qui ont réussi ont tous traversé une phase de doute identique.`
-    },
-    'pas-temps': {
-      surface: `Manque de temps`,
-      profond: `Le "je n'ai pas le temps" est rarement une réalité absolue — c'est une question de priorités. Ce client gère déjà un emploi du temps chargé et ne voit pas comment intégrer quelque chose de plus. La clé : montrer que 30 à 60 minutes par jour suffisent pour démarrer, et valoriser les formats de travail asynchrones et flexibles.`
-    },
-    'ne-sait-pas': {
-      surface: `Ne sait pas par où commencer`,
-      profond: `Ce client est noyé sous l'information disponible en ligne. Il/elle a peut-être regardé des dizaines de vidéos, lu des articles — mais sans cadre clair, chaque nouvelle information ajoute de la confusion plutôt que de la clarté. Ce dont il/elle a besoin : un chemin balisé, simple et linéaire. Pas plus d'informations — une méthode.`
-    },
-    'peur-regard': {
-      surface: `Peur du jugement des autres`,
-      profond: `Cette peur révèle un besoin de validation externe fort. Ce client a probablement un entourage sceptique envers le business en ligne ou les "trucs sur internet". Il/elle anticipe les moqueries ou le manque de soutien. Pour débloquer cette situation : normaliser le fait de commencer discrètement, sans tout annoncer à son entourage immédiat.`
-    },
-    'attend-moment': {
-      surface: `Attend le bon moment`,
-      profond: `L'attente du "bon moment" est une forme de procrastination protectrice. Tant qu'il/elle attend, il/elle ne peut pas échouer. Ce client a besoin d'un déclic externe — une preuve que des personnes dans sa situation exacte ont commencé sans que les conditions soient parfaites, et que c'est précisément là que tout a changé.`
-    }
+    'peur-depenser': { surface:"Peur de perdre de l'argent", profond:"Ce frein cache souvent une blessure financière passée ou un sentiment d'insécurité profond. Ce client n'a pas peur de « perdre de l'argent » en théorie — il/elle a peur de se retrouver encore plus vulnérable. Pour le/la convaincre, il ne s'agit pas de baisser le prix, mais de réduire le risque perçu : preuves sociales concrètes, résultats réalistes, accompagnement visible." },
+    'peur-echouer':  { surface:"Peur d'échouer", profond:"Derrière cette peur se cache souvent la peur du regard des autres plus que l'échec lui-même. Ce client imagine les « je te l'avais dit » avant même d'avoir essayé. Montrez que l'échec partiel fait partie du processus — et que ceux qui ont réussi ont tous traversé une phase de doute identique." },
+    'pas-temps':     { surface:"Manque de temps", profond:"Le « je n'ai pas le temps » est rarement une réalité absolue — c'est une question de priorités. La clé : montrer que 30 à 60 minutes par jour suffisent pour démarrer, et valoriser les formats de travail asynchrones et flexibles." },
+    'ne-sait-pas':   { surface:"Ne sait pas par où commencer", profond:"Ce client est noyé sous l'information disponible en ligne. Chaque nouvelle information ajoute de la confusion plutôt que de la clarté. Ce dont il/elle a besoin : un chemin balisé, simple et linéaire. Pas plus d'informations — une méthode." },
+    'peur-regard':   { surface:"Peur du jugement des autres", profond:"Cette peur révèle un besoin de validation externe fort. Ce client anticipe les moqueries ou le manque de soutien. Pour débloquer cette situation : normaliser le fait de commencer discrètement, sans tout annoncer à son entourage immédiat." },
+    'attend-moment': { surface:"Attend le bon moment", profond:"L'attente du « bon moment » est une forme de procrastination protectrice. Tant qu'il/elle attend, il/elle ne peut pas échouer. Ce client a besoin d'un déclic externe — une preuve que des personnes dans sa situation exacte ont commencé sans que les conditions soient parfaites." }
   };
-
-  // Croyances — ce qu'elles révèlent
   const croyancesAnalyse = {
     'seul':           `"Je trouverai tout seul" — Cette croyance maintient l'illusion du contrôle. En réalité, elle retarde indéfiniment le passage à l'action. Un accompagnement structuré divise le temps d'apprentissage par 3 à 5 comparé à l'autoformation.`,
-    'pas-bon-moment': `"Ce n'est pas le bon moment" — Le bon moment n'existe pas, il se crée. Chaque mois passé à attendre est un mois de revenus potentiels perdus. Les conditions ne seront jamais parfaites — mais elles peuvent être suffisantes dès aujourd'hui.`,
-    'attendre-argent':`"J'attends d'avoir plus d'argent" — Le paradoxe classique : attendre d'avoir de l'argent pour en gagner. La plupart des business en ligne nécessitent un investissement initial minimal. Ce qui bloque ici n'est pas le budget, c'est la confiance dans le retour sur investissement.`,
-    'attendre-temps': `"J'attends d'avoir plus de temps" — Le temps ne se libère pas spontanément. Il se prend. Ce client attend une permission que personne ne lui donnera. Le changement commence avec les ressources disponibles maintenant, pas plus tard.`,
-    'pas-pour-moi':   `"Ça ne marchera pas pour moi" — Cette croyance est alimentée par le manque de modèles identificatoires. Ce client n'a pas encore vu quelqu'un qui lui ressemble vraiment réussir. Votre rôle : lui montrer des profils concrets, ordinaires, qui avaient les mêmes doutes et ont avancé quand même.`,
-    'pas-fait':       `"Je ne suis pas fait pour ça" — Ce n'est pas une réalité, c'est une identité limitante construite au fil du temps. Le digital en ligne ne demande pas de compétences innées — il demande une méthode apprise et de la constance. Comme tout métier.`,
-    'regarde-encore': `"Je continue de regarder pour voir" — Ce profil est en phase d'observation prolongée. Il/elle accumule des informations sans jamais convertir en action. Ce dont il/elle a besoin : une proposition claire avec une première étape unique, simple et sans risque.`
+    'pas-bon-moment': `"Ce n'est pas le bon moment" — Le bon moment n'existe pas, il se crée. Chaque mois passé à attendre est un mois de revenus potentiels perdus.`,
+    'attendre-argent':`"J'attends d'avoir plus d'argent" — Le paradoxe classique : attendre d'avoir de l'argent pour en gagner. Ce qui bloque ici n'est pas le budget, c'est la confiance dans le retour sur investissement.`,
+    'attendre-temps': `"J'attends d'avoir plus de temps" — Le temps ne se libère pas spontanément. Il se prend. Le changement commence avec les ressources disponibles maintenant, pas plus tard.`,
+    'pas-pour-moi':   `"Ça ne marchera pas pour moi" — Cette croyance est alimentée par le manque de modèles identificatoires. Ce client n'a pas encore vu quelqu'un qui lui ressemble vraiment réussir. Montrez des profils concrets, ordinaires, qui avaient les mêmes doutes.`,
+    'pas-fait':       `"Je ne suis pas fait pour ça" — Ce n'est pas une réalité, c'est une identité limitante. Le digital ne demande pas de compétences innées — il demande une méthode apprise et de la constance.`,
+    'regarde-encore': `"Je continue de regarder pour voir" — Ce profil est en phase d'observation prolongée. Ce dont il/elle a besoin : une proposition claire avec une première étape unique, simple et sans risque.`
   };
 
   const f = (answers[3]||[]).filter(v => freinsAnalyse[v]).slice(0,2);
@@ -696,39 +648,30 @@ function buildPsycho() {
 
   const freinsHTML = f.map(v => {
     const a = freinsAnalyse[v];
-    return `<div class="guide-sub">
-      <div class="guide-sub-title">${a.surface}</div>
-      <div class="guide-sub-text">${a.profond}</div>
-    </div>`;
+    return `<div class="guide-sub"><div class="guide-sub-title">${a.surface}</div><div class="guide-sub-text">${a.profond}</div></div>`;
   }).join('');
 
-  const croyancesHTML = c.map(v => `
-    <div class="action-item">
-      <div class="action-text">${croyancesAnalyse[v]}</div>
-    </div>`).join('');
+  const croyancesHTML = c.map(v => `<div class="action-item"><div class="action-text">${croyancesAnalyse[v]}</div></div>`).join('');
 
   return { freinsHTML, croyancesHTML, hasFreins: f.length > 0, hasCreyances: c.length > 0 };
 }
 
-// ── BLOC 3 : Fenêtre d'opportunité ──
+/* ── FENÊTRE ── */
 function buildFenetre() {
-  // Déclencheur : pourquoi maintenant
   const declMap = {
-    'vu-reussir':       `Ce client a été exposé à une preuve sociale directe. Il/elle a vu quelqu'un — dans une situation comparable — réussir en ligne. Ce moment a planté une graine : "si cette personne y est arrivée, pourquoi pas moi ?" C'est le signal le plus fort qui soit. Il indique que la motivation existe déjà — ce qui manque, c'est la direction.`,
-    'suit-comptes':     `Ce client consomme activement du contenu autour du business en ligne. Il/elle sait que c'est possible, il/elle connaît le vocabulaire, il/elle a déjà été exposé(e) aux méthodes. La curiosité est là — elle attend d'être convertie en action concrète.`,
-    'entendu-parler':   `Le bouche-à-oreille a joué son rôle. Une personne de confiance a évoqué le sujet, ce qui lui donne une crédibilité que la publicité n'aurait pas. Ce client est plus réceptif qu'un inconnu — mais il lui faut une validation supplémentaire pour franchir le cap.`,
-    'tombe-dessus':     `Ce client ne cherchait pas forcément une solution de business en ligne — mais il/elle cherchait une sortie à sa situation. Le digital est apparu comme une réponse possible. Son ouverture d'esprit est un atout : il/elle n'a pas de parti pris négatif fort.`,
-    'pense-longtemps':  `Ce client porte ce projet depuis longtemps dans un coin de sa tête. Il/elle y revient régulièrement sans jamais franchir le pas. Ce schéma répétitif suggère que l'envie est réelle — mais qu'un frein émotionnel (peur, doute, inertie) l'emporte à chaque fois sur la motivation. Il faut créer l'étincelle qui rompt le cycle.`,
-    'business-existant':`Ce client a déjà prouvé qu'il/elle était capable de se lancer. Il/elle n'a pas besoin d'être convaincu(e) que c'est possible — il/elle cherche ce qui lui permettra de passer au niveau supérieur. Son besoin est plus stratégique qu'émotionnel.`
+    'vu-reussir':       `Ce client a été exposé à une preuve sociale directe. Il/elle a vu quelqu'un — dans une situation comparable — réussir en ligne. Ce moment a planté une graine : "si cette personne y est arrivée, pourquoi pas moi ?" C'est le signal le plus fort qui soit.`,
+    'suit-comptes':     `Ce client consomme activement du contenu autour du business en ligne. La curiosité est là — elle attend d'être convertie en action concrète.`,
+    'entendu-parler':   `Le bouche-à-oreille a joué son rôle. Une personne de confiance a évoqué le sujet, ce qui lui donne une crédibilité que la publicité n'aurait pas.`,
+    'tombe-dessus':     `Ce client cherchait une sortie à sa situation. Le digital est apparu comme une réponse possible. Son ouverture d'esprit est un atout : il/elle n'a pas de parti pris négatif fort.`,
+    'pense-longtemps':  `Ce client porte ce projet depuis longtemps dans un coin de sa tête. Un frein émotionnel (peur, doute, inertie) l'emporte à chaque fois sur la motivation. Il faut créer l'étincelle qui rompt le cycle.`,
+    'business-existant':`Ce client a déjà prouvé qu'il/elle était capable de se lancer. Son besoin est plus stratégique qu'émotionnel.`
   };
-
-  // Urgence : ce qui empire si rien ne change
   const urgenceMap = {
     'subir-vie':       `Chaque mois supplémentaire dans cette situation renforce l'habitude et rend le changement plus difficile. La zone de confort, même inconfortable, s'ancre avec le temps.`,
-    'jamais-courage':  `Ce client sait qu'il/elle a tendance à remettre à plus tard. Si rien ne change dans sa façon d'aborder la décision, dans 1 an il/elle sera exactement à la même place — avec un an de regret supplémentaire.`,
-    'rater-opportunite':`Le marché du digital évolue vite. Les niches qui sont accessibles aujourd'hui seront plus saturées demain. Les premières années d'un marché en croissance sont toujours les plus favorables à l'installation.`,
-    'bloque-financier': `Sans source de revenus supplémentaires, la pression financière continuera d'augmenter. Chaque imprévu, chaque fin de mois tendue érode un peu plus la sérénité et la capacité à penser à long terme.`,
-    'autres-avancent':  `La comparaison sociale est un moteur puissant mais douloureux. Continuer à voir des pairs progresser sans bouger alimente un sentiment d'échec qui finit par miner la confiance en soi.`
+    'jamais-courage':  `Ce client sait qu'il/elle a tendance à remettre à plus tard. Dans 1 an il/elle sera exactement à la même place — avec un an de regret supplémentaire.`,
+    'rater-opportunite':`Les niches qui sont accessibles aujourd'hui seront plus saturées demain. Les premières années d'un marché en croissance sont toujours les plus favorables.`,
+    'bloque-financier': `Sans source de revenus supplémentaires, la pression financière continuera d'augmenter. Chaque imprévu érode un peu plus la sérénité.`,
+    'autres-avancent':  `La comparaison sociale alimente un sentiment d'échec qui finit par miner la confiance en soi.`
   };
 
   let declText = `Une combinaison de signaux l'a amené(e) à s'intéresser sérieusement au business en ligne. La motivation existe — elle a besoin d'être canalisée.`;
@@ -740,196 +683,131 @@ function buildFenetre() {
   return { declText, urgenceText };
 }
 
-// ── BLOC 4 : Stratégie de contenu ──
+/* ── STRATÉGIE ── */
 function buildStrategie() {
-  // Déterminer le profil dominant
-  const isMamanSolo        = has(1,'maman-solo');
-  const isEpuise           = any(2,['epuise-salariat']) || has(5,'epuise-continue');
-  const isFamille          = any(2,['temps-famille']) || any(9,['sacrifier-famille']);
-  const isPeurArgent       = has(3,'peur-depenser') || any(4,['attendre-argent']);
-  const isLiberte          = any(2,['nomade','quitter-emploi','liberte']);
-  const isProcrastinateur  = any(4,['regarde-encore','pas-bon-moment','attendre-temps','attendre-argent']);
-  const isImposteur        = has(4,'pas-fait') || has(3,'peur-echouer');
-  const isEntrepreneur     = has(1,'entrepreneur');
-  const isStressFinancier  = has(2,'stress-argent') || has(9,'stress-fin-mois');
-  const isEtudiant         = has(1,'etudiant');
-  const isFierte           = any(10,['fierte','inspirer']);
+  const isMamanSolo       = has(1,'maman-solo');
+  const isEpuise          = any(2,['epuise-salariat']) || has(5,'epuise-continue');
+  const isFamille         = any(2,['temps-famille']) || any(9,['sacrifier-famille']);
+  const isPeurArgent      = has(3,'peur-depenser') || any(4,['attendre-argent']);
+  const isLiberte         = any(2,['nomade','quitter-emploi','liberte']);
+  const isProcrastinateur = any(4,['regarde-encore','pas-bon-moment','attendre-temps','attendre-argent']);
+  const isImposteur       = has(4,'pas-fait') || has(3,'peur-echouer');
+  const isEntrepreneur    = has(1,'entrepreneur');
+  const isStressFinancier = has(2,'stress-argent') || has(9,'stress-fin-mois');
+  const isEtudiant        = has(1,'etudiant');
+  const isFierte          = any(10,['fierte','inspirer']);
 
-  // Angle principal
   let angle, pourquoi, messagesCles, formatsEfficaces, erreurEviter;
 
   if (isMamanSolo) {
     angle = `Liberté & sécurité pour les mamans solo`;
-    pourquoi = `Ce profil vit sous une double pression : financière et émotionnelle. Elle gère tout seule et n'a pas le droit à l'erreur. Votre message doit répondre à ces deux besoins simultanément : lui offrir une solution qui ne rajoute pas de charge mentale, et qui lui permet de retrouver une forme de contrôle sur sa vie.`;
-    messagesCles = [
-      `"Tu gères déjà tout seul(e). Ce business s'adapte à ton rythme — pas l'inverse."`,
-      `"D'autres mamans dans ta situation ont commencé sans avoir le temps parfait ni le budget parfait."`,
-      `"Le premier revenu supplémentaire change tout : pas parce qu'il règle tout, mais parce qu'il prouve que c'est possible."`
-    ];
-    formatsEfficaces = [`Témoignages de mamans solo avec résultats concrets`, `Contenu "une journée dans la vie de" avec les enfants`, `Posts rassurants sur la flexibilité et la gestion du temps`, `Stories authentiques sans sur-production`];
+    pourquoi = `Ce profil vit sous une double pression : financière et émotionnelle. Votre message doit répondre à ces deux besoins simultanément : lui offrir une solution qui ne rajoute pas de charge mentale, et qui lui permet de retrouver une forme de contrôle sur sa vie.`;
+    messagesCles = [`"Tu gères déjà tout seul(e). Ce business s'adapte à ton rythme — pas l'inverse."`,`"D'autres mamans dans ta situation ont commencé sans avoir le temps parfait ni le budget parfait."`,`"Le premier revenu supplémentaire change tout : pas parce qu'il règle tout, mais parce qu'il prouve que c'est possible."`];
+    formatsEfficaces = [`Témoignages de mamans solo avec résultats concrets`,`Contenu "une journée dans la vie de" avec les enfants`,`Posts rassurants sur la flexibilité et la gestion du temps`,`Stories authentiques sans sur-production`];
     erreurEviter = `Ne pas montrer une vie idéalisée sans enfants ni contraintes. Ce profil a besoin de se reconnaître, pas de rêver d'une vie inaccessible.`;
   } else if (isEpuise) {
     angle = `Sortie de l'épuisement — la solution simple`;
-    pourquoi = `Ce profil n'a plus d'énergie disponible pour absorber quelque chose de complexe. Son cerveau est saturé. Le message doit être minimal, rassurant et direct. Pas de promesses grandiloquentes, pas d'enthousiasme forcé — juste une porte de sortie réaliste, présentée simplement.`;
-    messagesCles = [
-      `"Tu n'as pas besoin d'en faire plus. Tu as besoin de faire différemment."`,
-      `"Tu mérites de travailler pour quelque chose qui te redonne de l'énergie au lieu d'en prendre."`,
-      `"Le plus dur, c'est de commencer. Après, le système travaille pour toi."`
-    ];
-    formatsEfficaces = [`Contenu court et direct — pas de vidéos de 20 minutes`, `Témoignages de personnes qui étaient épuisées avant de changer`, `Checklist simple "par où commencer en 3 étapes"`, `Ton calme, non-excité — le contraire des contenus "motivation à fond"`];
-    erreurEviter = `Éviter les contenus trop énergiques ou les promesses trop rapides. Ce profil se méfie de tout ce qui semble "trop facile" — et il a raison de le faire.`;
+    pourquoi = `Ce profil n'a plus d'énergie disponible pour absorber quelque chose de complexe. Le message doit être minimal, rassurant et direct. Pas de promesses grandiloquentes — juste une porte de sortie réaliste, présentée simplement.`;
+    messagesCles = [`"Tu n'as pas besoin d'en faire plus. Tu as besoin de faire différemment."`,`"Tu mérites de travailler pour quelque chose qui te redonne de l'énergie au lieu d'en prendre."`,`"Le plus dur, c'est de commencer. Après, le système travaille pour toi."`];
+    formatsEfficaces = [`Contenu court et direct`,`Témoignages de personnes qui étaient épuisées avant de changer`,`Checklist simple "par où commencer en 3 étapes"`,`Ton calme, non-excité`];
+    erreurEviter = `Éviter les contenus trop énergiques ou les promesses trop rapides. Ce profil se méfie de tout ce qui semble "trop facile".`;
   } else if (isFamille) {
     angle = `Le temps retrouvé — vendre une présence, pas un revenu`;
-    pourquoi = `Pour ce profil, l'argent est un moyen, pas une fin. Sa vraie douleur, c'est de manquer des moments avec ses proches. Votre contenu doit d'abord peindre la vie qu'il/elle veut vivre — puis montrer comment le business en ligne rend cette vie possible. L'ordre est crucial : le mode de vie avant le business.`;
-    messagesCles = [
-      `"L'argent que tu veux gagner ne sert pas à t'enrichir — il sert à racheter du temps."`,
-      `"Imagine récupérer ton enfant à l'école tous les jours. Voilà ce que ça change vraiment."`,
-      `"Travailler depuis chez soi n'est pas un luxe. C'est un choix que tu peux faire maintenant."`
-    ];
-    formatsEfficaces = [`Storytelling de journées libres avec la famille`, `Contenu "avant/après" centré sur le temps et la présence`, `Témoignages de parents qui ont retrouvé leur disponibilité`, `Posts du matin sans réveil, des déjeuners en famille`];
+    pourquoi = `Pour ce profil, l'argent est un moyen, pas une fin. Sa vraie douleur, c'est de manquer des moments avec ses proches. Votre contenu doit d'abord peindre la vie qu'il/elle veut vivre — puis montrer comment le business en ligne rend cette vie possible.`;
+    messagesCles = [`"L'argent que tu veux gagner ne sert pas à t'enrichir — il sert à racheter du temps."`,`"Imagine récupérer ton enfant à l'école tous les jours. Voilà ce que ça change vraiment."`,`"Travailler depuis chez soi n'est pas un luxe. C'est un choix que tu peux faire maintenant."`];
+    formatsEfficaces = [`Storytelling de journées libres avec la famille`,`Contenu "avant/après" centré sur le temps`,`Témoignages de parents qui ont retrouvé leur disponibilité`,`Posts du matin sans réveil`];
     erreurEviter = `Ne pas commencer par parler d'argent ou de chiffres. Ce profil décroche immédiatement si le message ressemble à "gagne 3000€/mois". Son déclencheur est émotionnel, pas financier.`;
   } else if (isPeurArgent) {
     angle = `La preuve avant la promesse`;
-    pourquoi = `Ce profil a peur d'investir pour rien — et cette peur est légitime. Il/elle ne sera pas convaincu(e) par une belle page de vente ou des promesses enthousiastes. La seule chose qui fonctionne avec ce profil : la preuve répétée, transparente, chiffrée. Montrez les résultats réels, les délais réalistes, ce que ça coûte vraiment — et ce que ça demande vraiment.`;
-    messagesCles = [
-      `"Voici exactement combien j'ai gagné en mois 1, mois 2, mois 3 — avec les captures à l'appui."`,
-      `"Ce n'est pas un investissement à fonds perdus. Voici pourquoi et comment tu le rentabilises."`,
-      `"Tu as le droit d'être méfiant(e). Voici les questions difficiles — et mes réponses honnêtes."`
-    ];
-    formatsEfficaces = [`Rapports de revenus transparents avec contexte`, `FAQ qui répond aux objections avant qu'elles soient posées`, `Contenu "combien ça m'a vraiment coûté pour démarrer"`, `Témoignages avec délais et montants précis`];
-    erreurEviter = `Éviter tout ce qui ressemble à du "lifestyle" ou à des captures de notifications de ventes. Ce profil ne croit pas aux montages — il veut des preuves vérifiables.`;
+    pourquoi = `Ce profil ne sera pas convaincu par une belle page de vente ou des promesses enthousiastes. La seule chose qui fonctionne : la preuve répétée, transparente, chiffrée.`;
+    messagesCles = [`"Voici exactement combien j'ai gagné en mois 1, mois 2, mois 3 — avec les captures à l'appui."`,`"Ce n'est pas un investissement à fonds perdus. Voici pourquoi et comment tu le rentabilises."`,`"Tu as le droit d'être méfiant(e). Voici les questions difficiles — et mes réponses honnêtes."`];
+    formatsEfficaces = [`Rapports de revenus transparents avec contexte`,`FAQ qui répond aux objections avant qu'elles soient posées`,`Contenu "combien ça m'a vraiment coûté pour démarrer"`,`Témoignages avec délais et montants précis`];
+    erreurEviter = `Éviter tout ce qui ressemble à du "lifestyle" ou à des captures de notifications de ventes. Ce profil veut des preuves vérifiables.`;
   } else if (isLiberte) {
     angle = `Vendre un mode de vie, pas un produit`;
-    pourquoi = `Ce profil ne cherche pas un revenu supplémentaire — il/elle cherche une nouvelle façon de vivre. La liberté géographique, l'autonomie totale, l'absence de patron : voilà ce qu'il/elle achète. Votre contenu doit incarner ce mode de vie avant d'en parler. Montrez, ne dites pas.`;
-    messagesCles = [
-      `"Tu ne veux pas juste plus d'argent. Tu veux ne plus avoir à demander la permission."`,
-      `"Travailler de n'importe où n'est pas un rêve — c'est une infrastructure que tu peux construire."`,
-      `"La liberté n'est pas gratuite. Mais elle est accessible. Voici comment."`
-    ];
-    formatsEfficaces = [`Contenu de vie nomade authentique`, `"Journée type" depuis différents endroits`, `Comparatif "vie d'avant / vie d'après"`, `Témoignages axés sur la liberté de temps plutôt que les revenus`];
-    erreurEviter = `Ne pas réduire le message à l'argent. Ce profil se déconnecte dès que le discours devient trop "gagner de l'argent en ligne". Son moteur, c'est la liberté — pas la richesse.`;
+    pourquoi = `Ce profil ne cherche pas un revenu supplémentaire — il/elle cherche une nouvelle façon de vivre. Votre contenu doit incarner ce mode de vie avant d'en parler. Montrez, ne dites pas.`;
+    messagesCles = [`"Tu ne veux pas juste plus d'argent. Tu veux ne plus avoir à demander la permission."`,`"Travailler de n'importe où n'est pas un rêve — c'est une infrastructure que tu peux construire."`,`"La liberté n'est pas gratuite. Mais elle est accessible. Voici comment."`];
+    formatsEfficaces = [`Contenu de vie nomade authentique`,`"Journée type" depuis différents endroits`,`Comparatif "vie d'avant / vie d'après"`,`Témoignages axés sur la liberté de temps`];
+    erreurEviter = `Ne pas réduire le message à l'argent. Ce profil se déconnecte dès que le discours devient trop "gagner de l'argent en ligne". Son moteur, c'est la liberté.`;
   } else if (isProcrastinateur) {
     angle = `Rompre le cycle de l'attente`;
-    pourquoi = `Ce profil accumule des informations depuis des mois, parfois des années, sans jamais passer à l'action. Le problème n'est pas le manque d'information — c'est l'inertie. Votre contenu doit créer un sentiment d'urgence authentique et proposer une seule action immédiate, aussi simple que possible. Moins il y a de décisions à prendre, plus il y a de chances qu'une action soit prise.`;
-    messagesCles = [
-      `"Dans 6 mois, tu seras soit en train de commencer, soit en train de regarder d'autres commencer."`,
-      `"Tu n'as pas besoin de tout savoir pour démarrer. Tu as besoin de commencer pour tout savoir."`,
-      `"La seule étape qui compte aujourd'hui : celle-ci. Rien d'autre."`
-    ];
-    formatsEfficaces = [`Contenu "le coût réel de l'attente" avec chiffres concrets`, `Appels à l'action ultra-simples avec une seule étape`, `Témoignages de personnes qui ont longtemps attendu avant de se lancer`, `Série "ce que j'aurais gagné si j'avais commencé il y a 1 an"`];
-    erreurEviter = `Éviter de donner encore plus d'informations ou de contenu éducatif. Ce profil est déjà sur-informé. Plus d'informations = plus de paralysie. Ce qu'il lui faut, c'est une décision — pas un savoir supplémentaire.`;
+    pourquoi = `Ce profil accumule des informations depuis des mois sans jamais passer à l'action. Le problème n'est pas le manque d'information — c'est l'inertie. Proposez une seule action immédiate, aussi simple que possible.`;
+    messagesCles = [`"Dans 6 mois, tu seras soit en train de commencer, soit en train de regarder d'autres commencer."`,`"Tu n'as pas besoin de tout savoir pour démarrer. Tu as besoin de commencer pour tout savoir."`,`"La seule étape qui compte aujourd'hui : celle-ci. Rien d'autre."`];
+    formatsEfficaces = [`Contenu "le coût réel de l'attente" avec chiffres concrets`,`Appels à l'action ultra-simples`,`Témoignages de personnes qui ont longtemps attendu`,`Série "ce que j'aurais gagné si j'avais commencé il y a 1 an"`];
+    erreurEviter = `Éviter de donner encore plus d'informations. Ce profil est déjà sur-informé. Plus d'informations = plus de paralysie.`;
   } else if (isImposteur) {
     angle = `La légitimité se construit en faisant, pas en attendant`;
-    pourquoi = `Ce profil se compare aux "experts" qu'il/elle voit en ligne et conclut qu'il/elle n'est pas à la hauteur. Cette comparaison est biaisée : il/elle ne voit que la façade, pas les débuts hésitants. Votre contenu doit normaliser le fait de commencer sans tout maîtriser — et montrer que la légitimité s'acquiert par l'action, pas par la formation préalable.`;
-    messagesCles = [
-      `"Tu n'as pas besoin d'être expert(e) pour commencer. Tu as besoin de commencer pour devenir expert(e)."`,
-      `"Ceux que tu admires ont tous eu un jour 0. Voilà à quoi ressemblait le leur."`,
-      `"Ta valeur n'est pas dans ce que tu sais — elle est dans ce que tu fais avec ce que tu sais."`
-    ];
-    formatsEfficaces = [`Partage de tes propres débuts imparfaits`, `Témoignages de profils "ordinaires" avec parcours détaillé`, `Contenu dédramatisant : "ce que j'ai appris en faisant des erreurs"`, `Posts "je n'étais pas expert(e) non plus au début"`];
-    erreurEviter = `Éviter de trop mettre en avant vos propres résultats impressionnants. Ça renforce le sentiment d'illégitimité. Ce profil a besoin de se voir dans votre parcours, pas de vous admirer de loin.`;
+    pourquoi = `Ce profil se compare aux "experts" qu'il/elle voit en ligne et conclut qu'il/elle n'est pas à la hauteur. Votre contenu doit normaliser le fait de commencer sans tout maîtriser.`;
+    messagesCles = [`"Tu n'as pas besoin d'être expert(e) pour commencer. Tu as besoin de commencer pour devenir expert(e)."`,`"Ceux que tu admires ont tous eu un jour 0. Voilà à quoi ressemblait le leur."`,`"Ta valeur n'est pas dans ce que tu sais — elle est dans ce que tu fais avec ce que tu sais."`];
+    formatsEfficaces = [`Partage de tes propres débuts imparfaits`,`Témoignages de profils "ordinaires"`,`Contenu dédramatisant : "ce que j'ai appris en faisant des erreurs"`,`Posts "je n'étais pas expert(e) non plus au début"`];
+    erreurEviter = `Éviter de trop mettre en avant vos propres résultats impressionnants. Ça renforce le sentiment d'illégitimité. Ce profil a besoin de se voir dans votre parcours.`;
   } else if (isEntrepreneur) {
     angle = `Le levier stratégique qui manque`;
-    pourquoi = `Ce profil a déjà prouvé sa capacité à entreprendre. Il n'a pas besoin d'être convaincu que le business en ligne fonctionne — il/elle le sait. Ce qu'il/elle cherche, c'est ce qui va faire décoller ce qui stagne ou ajouter une source de revenus complémentaire intelligente. Parlez stratégie, pas bases.`;
-    messagesCles = [
-      `"Tu as déjà fait le plus dur. Ce qu'il te manque, c'est le levier — pas le travail."`,
-      `"Ajouter une source de revenus automatisée à ce que tu fais déjà : voilà le prochain palier."`,
-      `"Tu n'as pas besoin de tout recommencer. Tu as besoin d'optimiser ce qui existe."`
-    ];
-    formatsEfficaces = [`Contenu stratégique et analytique`, `Études de cas avec chiffres et processus détaillés`, `Comparatifs de modèles de revenus`, `Approche pair-à-pair, pas professeur-élève`];
-    erreurEviter = `Ne pas parler à ce profil comme à un débutant. Il/elle décrochera immédiatement si le contenu est trop basique. Respecter son niveau d'expérience.`;
+    pourquoi = `Ce profil a déjà prouvé sa capacité à entreprendre. Ce qu'il/elle cherche, c'est ce qui va faire décoller ce qui stagne ou ajouter une source de revenus complémentaire intelligente. Parlez stratégie, pas bases.`;
+    messagesCles = [`"Tu as déjà fait le plus dur. Ce qu'il te manque, c'est le levier — pas le travail."`,`"Ajouter une source de revenus automatisée à ce que tu fais déjà : voilà le prochain palier."`,`"Tu n'as pas besoin de tout recommencer. Tu as besoin d'optimiser ce qui existe."`];
+    formatsEfficaces = [`Contenu stratégique et analytique`,`Études de cas avec chiffres et processus`,`Comparatifs de modèles de revenus`,`Approche pair-à-pair`];
+    erreurEviter = `Ne pas parler à ce profil comme à un débutant. Il/elle décrochera immédiatement si le contenu est trop basique.`;
   } else if (isStressFinancier) {
     angle = `Du concret — combien, quand, comment`;
-    pourquoi = `Ce profil est sous pression financière réelle. Il/elle n'a pas le luxe de tenter des expériences coûteuses ou longues. Ce qu'il/elle a besoin d'entendre, c'est : combien on peut espérer gagner, en combien de temps de façon réaliste, et avec quel investissement de départ. La clarté financière est votre meilleur outil de conversion.`;
-    messagesCles = [
-      `"Voici ce que tu peux espérer gagner dans les 30 à 90 premiers jours — sans sur-promettre."`,
-      `"Le stress de la caisse, c'est le signal que quelque chose doit changer. Voilà comment le changer."`,
-      `"Un revenu complémentaire de 300€/mois, ça change quoi concrètement ? Tout."`
-    ];
-    formatsEfficaces = [`Revenus transparents avec délais réalistes`, `Calculs simples : "avec X heures par semaine, voilà ce que tu peux générer"`, `Témoignages centrés sur l'impact financier concret`, `Posts "ce que ça a changé pour moi d'avoir 500€ de plus par mois"`];
-    erreurEviter = `Éviter les screenshots de revenus à 5 chiffres. Ce profil ne s'y identifie pas — et ça lui semble inaccessible. Commencez petit, commencez réaliste.`;
+    pourquoi = `Ce profil est sous pression financière réelle. Ce qu'il/elle a besoin d'entendre : combien on peut espérer gagner, en combien de temps de façon réaliste, avec quel investissement de départ.`;
+    messagesCles = [`"Voici ce que tu peux espérer gagner dans les 30 à 90 premiers jours — sans sur-promettre."`,`"Le stress de la caisse, c'est le signal que quelque chose doit changer. Voilà comment le changer."`,`"Un revenu complémentaire de 300€/mois, ça change quoi concrètement ? Tout."`];
+    formatsEfficaces = [`Revenus transparents avec délais réalistes`,`Calculs simples : "avec X heures par semaine"`,`Témoignages centrés sur l'impact financier concret`,`Posts "ce que ça a changé pour moi d'avoir 500€ de plus par mois"`];
+    erreurEviter = `Éviter les screenshots de revenus à 5 chiffres. Ce profil ne s'y identifie pas. Commencez petit, commencez réaliste.`;
   } else if (isEtudiant) {
     angle = `L'avantage du départ précoce`;
-    pourquoi = `Ce profil n'a pas encore de mauvaises habitudes professionnelles à défaire, pas encore de prêt immobilier qui l'ancre, pas encore d'identité professionnelle figée. C'est son atout majeur — même s'il/elle ne le mesure pas encore. Votre message doit lui faire prendre conscience qu'il/elle a une longueur d'avance sur ceux qui commenceront à 35 ans.`;
-    messagesCles = [
-      `"La plupart des gens découvrent le business en ligne trop tard. Toi, tu peux être la personne qu'ils regardent avec envie dans 5 ans."`,
-      `"Commencer sans expérience n'est pas un handicap — c'est une liberté."`,
-      `"Tu n'as rien à perdre et tout à gagner. La meilleure période pour essayer, c'est maintenant."`
-    ];
-    formatsEfficaces = [`Contenu court, rythmé, adapté aux réseaux`, `Résultats rapides mis en avant`, `Communauté et appartenance à un groupe`, `Ton direct, sans condescendance`];
-    erreurEviter = `Ne pas parler à ce profil comme à quelqu'un qui a besoin d'être rassuré sur la légitimité du digital. Il/elle est natif(ve) du web — il/elle sait que ça marche. Ce qu'il lui faut, c'est le mode d'emploi concret.`;
+    pourquoi = `Ce profil n'a pas encore de mauvaises habitudes professionnelles à défaire. C'est son atout majeur — même s'il/elle ne le mesure pas encore.`;
+    messagesCles = [`"La plupart des gens découvrent le business en ligne trop tard. Toi, tu peux être la personne qu'ils regardent avec envie dans 5 ans."`,`"Commencer sans expérience n'est pas un handicap — c'est une liberté."`,`"Tu n'as rien à perdre et tout à gagner. La meilleure période pour essayer, c'est maintenant."`];
+    formatsEfficaces = [`Contenu court et rythmé`,`Résultats rapides mis en avant`,`Communauté et appartenance`,`Ton direct, sans condescendance`];
+    erreurEviter = `Ne pas parler à ce profil comme à quelqu'un qui a besoin d'être rassuré sur la légitimité du digital. Il/elle est natif(ve) du web — ce qu'il lui faut, c'est le mode d'emploi concret.`;
   } else if (isFierte) {
     angle = `La réussite comme preuve à soi-même`;
-    pourquoi = `Ce profil a besoin de se prouver quelque chose — à lui/elle-même d'abord. La réussite financière serait avant tout une victoire intime, une confirmation qu'il/elle en est capable. Votre contenu doit toucher à l'identité et à l'estime de soi, pas seulement aux revenus.`;
-    messagesCles = [
-      `"Dans 6 mois, tu pourrais être la personne que tu regardes aujourd'hui en te demandant comment elle y est arrivée."`,
-      `"Ce que tu construis ici, c'est plus qu'un revenu. C'est la preuve que tu avais raison d'y croire."`,
-      `"Chaque vente est une victoire. Pas sur les autres — sur tes propres doutes."`
-    ];
-    formatsEfficaces = [`Témoignages émotionnels axés sur la transformation personnelle`, `Contenu "qui j'étais avant / qui je suis devenu(e)"`, `Posts sur la fierté, l'estime de soi, le sentiment de légitimité`, `Partage de petites victoires progressives`];
-    erreurEviter = `Ne pas réduire le discours à l'argent. Ce profil décroche si le message est purement financier. Ce qui le/la touche, c'est la transformation — la personne qu'il/elle devient.`;
+    pourquoi = `Ce profil a besoin de se prouver quelque chose — à lui/elle-même d'abord. La réussite financière serait avant tout une victoire intime. Votre contenu doit toucher à l'identité et à l'estime de soi.`;
+    messagesCles = [`"Dans 6 mois, tu pourrais être la personne que tu regardes aujourd'hui en te demandant comment elle y est arrivée."`,`"Ce que tu construis ici, c'est plus qu'un revenu. C'est la preuve que tu avais raison d'y croire."`,`"Chaque vente est une victoire. Pas sur les autres — sur tes propres doutes."`];
+    formatsEfficaces = [`Témoignages émotionnels axés sur la transformation`,`Contenu "qui j'étais avant / qui je suis devenu(e)"`,`Posts sur la fierté et l'estime de soi`,`Partage de petites victoires progressives`];
+    erreurEviter = `Ne pas réduire le discours à l'argent. Ce profil décroche si le message est purement financier. Ce qui le/la touche, c'est la transformation.`;
   } else {
     angle = `Solution claire, guidée, avec preuves`;
-    pourquoi = `Ce profil cherche avant tout de la clarté : qu'est-ce que c'est exactement, comment ça marche, est-ce que c'est pour moi ? Votre contenu doit répondre à ces questions dans cet ordre, sans détour.`;
-    messagesCles = [
-      `"Voici exactement ce que tu obtiens, comment ça fonctionne, et ce que tu peux espérer."`,
-      `"Des personnes dans ta situation exacte ont commencé — et voilà où elles en sont."`,
-      `"Une seule prochaine étape. Rien d'autre."`
-    ];
-    formatsEfficaces = [`Contenu éducatif clair et structuré`, `Témoignages de profils similaires`, `FAQ complète et honnête`, `Appel à l'action unique et visible`];
+    pourquoi = `Ce profil cherche avant tout de la clarté : qu'est-ce que c'est exactement, comment ça marche, est-ce que c'est pour moi ? Répondez dans cet ordre, sans détour.`;
+    messagesCles = [`"Voici exactement ce que tu obtiens, comment ça fonctionne, et ce que tu peux espérer."`,`"Des personnes dans ta situation exacte ont commencé — et voilà où elles en sont."`,`"Une seule prochaine étape. Rien d'autre."`];
+    formatsEfficaces = [`Contenu éducatif clair`,`Témoignages de profils similaires`,`FAQ complète et honnête`,`Appel à l'action unique et visible`];
     erreurEviter = `Éviter de surcharger d'informations. Ce profil a besoin de clarté, pas d'exhaustivité.`;
   }
 
   return { angle, pourquoi, messagesCles, formatsEfficaces, erreurEviter };
 }
 
-// ── BLOC 5 : Plan d'action ──
-function buildPlanAction(stratAngle) {
-  // Hook personnalisé basé sur le profil
+/* ── PLAN D'ACTION ── */
+function buildPlanAction() {
   const hookMap = {
-    'maman-solo':       { hook: `"Tu gères déjà tout seul(e). Imagine juste faire pareil — mais pour toi."`, why: `Cette phrase valide son quotidien sans le dramatiser. Elle repositionne ses compétences existantes comme un atout.` },
-    'epuise-continue':  { hook: `"Tu es épuisé(e) de donner autant pour si peu. Il existe un autre chemin — et il est plus simple que tu ne le crois."`, why: `Cette phrase valide d'abord la douleur avant de proposer la solution. C'est l'ordre exact dont ce profil a besoin.` },
-    'culpabilise-famille': { hook: `"L'argent que tu veux gagner ne sert pas à t'enrichir — il sert à racheter du temps avec ceux que tu aimes."`, why: `Elle reformule l'ambition financière en valeur émotionnelle. Ce profil s'y reconnaît immédiatement.` },
-    'jalousie':         { hook: `"Dans 6 mois, tu pourrais être la personne que tu regardes aujourd'hui en te demandant comment elle y est arrivée."`, why: `Elle retourne l'émotion de jalousie en moteur d'action. Elle projette sans promettre.` },
-    'coincé':           { hook: `"Tu ne t'es pas trompé(e) de vie. Tu n'as juste pas encore trouvé la sortie. Elle existe."`, why: `Cette phrase reconnaît le sentiment sans le valider comme définitif. Elle ouvre une porte.` },
-    'travaille-pour-rien': { hook: `"Ce n'est pas que tu travailles mal. C'est que tu travailles pour le mauvais système."`, why: `Elle déplace la responsabilité du système vers l'individu sans culpabiliser — et propose un changement de cadre.` },
-    'perdu':            { hook: `"Tu n'as pas besoin de tout comprendre pour commencer. Tu as besoin de commencer pour tout comprendre."`, why: `Elle court-circuite le besoin de maîtrise totale avant l'action — le frein principal de ce profil.` },
-    'stress-argent':    { hook: `"Ce n'est pas normal de stresser chaque fois que tu passes à la caisse. Et c'est tout à fait possible de changer ça."`, why: `Elle nomme la douleur précise et affirme immédiatement que c'est résolvable. Simple et direct.` }
+    'maman-solo':          { hook:`"Tu gères déjà tout seul(e). Imagine juste faire pareil — mais pour toi."`, why:`Cette phrase valide son quotidien sans le dramatiser. Elle repositionne ses compétences existantes comme un atout.` },
+    'epuise-continue':     { hook:`"Tu es épuisé(e) de donner autant pour si peu. Il existe un autre chemin — et il est plus simple que tu ne le crois."`, why:`Cette phrase valide d'abord la douleur avant de proposer la solution.` },
+    'culpabilise-famille': { hook:`"L'argent que tu veux gagner ne sert pas à t'enrichir — il sert à racheter du temps avec ceux que tu aimes."`, why:`Elle reformule l'ambition financière en valeur émotionnelle.` },
+    'jalousie':            { hook:`"Dans 6 mois, tu pourrais être la personne que tu regardes aujourd'hui en te demandant comment elle y est arrivée."`, why:`Elle retourne l'émotion de jalousie en moteur d'action.` },
+    'coincé':              { hook:`"Tu ne t'es pas trompé(e) de vie. Tu n'as juste pas encore trouvé la sortie. Elle existe."`, why:`Cette phrase reconnaît le sentiment sans le valider comme définitif.` },
+    'travaille-pour-rien': { hook:`"Ce n'est pas que tu travailles mal. C'est que tu travailles pour le mauvais système."`, why:`Elle déplace la responsabilité du système vers l'individu sans culpabiliser.` },
+    'perdu':               { hook:`"Tu n'as pas besoin de tout comprendre pour commencer. Tu as besoin de commencer pour tout comprendre."`, why:`Elle court-circuite le besoin de maîtrise totale avant l'action.` },
+    'stress-argent':       { hook:`"Ce n'est pas normal de stresser chaque fois que tu passes à la caisse. Et c'est tout à fait possible de changer ça."`, why:`Elle nomme la douleur précise et affirme immédiatement que c'est résolvable.` }
   };
 
-  let hook = { hook: `"Tu cherches quelque chose de réel, de concret, qui s'adapte à ta vie. C'est exactement ce que c'est."`, why: `Cette phrase universelle répond au besoin de validation sans sur-promettre.` };
+  let hook = { hook:`"Tu cherches quelque chose de réel, de concret, qui s'adapte à ta vie. C'est exactement ce que c'est."`, why:`Cette phrase universelle répond au besoin de validation sans sur-promettre.` };
   for (const [k,v] of Object.entries(hookMap)) {
     if (has(5,k) || has(2,k) || has(1,k)) { hook = v; break; }
   }
 
-  // 5 actions concrètes basées sur le profil
+  const freinsNoms = (answers[3]||[]).slice(0,2).map(v=>({'peur-depenser':"peur de l'investissement",'peur-echouer':"peur d'échouer",'pas-temps':"manque de temps",'ne-sait-pas':"ne sait pas comment commencer",'peur-regard':"peur du jugement",'attend-moment':"attend le bon moment"}[v]||v));
+
   const actions = [
-    {
-      titre: `Adapter l'accroche de votre bio et de votre profil`,
-      detail: `Votre premier message doit refléter exactement la douleur principale de ce client. Si vous avez identifié "épuisement du salariat" comme moteur, votre bio doit parler à ceux qui en ont assez — pas à "tout le monde". Plus c'est spécifique, plus ça résonne.`
-    },
-    {
-      titre: `Créer un contenu de preuve sociale ciblé`,
-      detail: `Ne montrez pas n'importe quel témoignage — montrez des témoignages de personnes qui ressemblent à ce profil : même situation de départ, mêmes freins, mêmes doutes. L'identification est la clé de la confiance.`
-    },
-    {
-      titre: `Construire un parcours d'entrée sans friction`,
-      detail: `Ce profil ne convertit pas sur un premier contact. Prévoyez un "premier pas" ultra-simple : un contenu gratuit, une ressource, une invitation à une communauté. L'objectif est de créer un premier "oui" avant le grand "oui".`
-    },
-    {
-      titre: `Adresser les objections en amont dans votre contenu`,
-      detail: `Les freins identifiés (${(answers[3]||[]).length > 0 ? 'notamment : ' + (answers[3]||[]).slice(0,2).map(v=>({'peur-depenser':'peur de l\'investissement','peur-echouer':'peur d\'échouer','pas-temps':'manque de temps','ne-sait-pas':'ne sait pas comment commencer','peur-regard':'peur du jugement','attend-moment':'attend le bon moment'}[v]||v)).join(', ') : 'les doutes habituels'}) doivent être traités directement dans votre contenu régulier — sans attendre qu'on vous les pose.`
-    },
-    {
-      titre: `Utiliser la phrase d'accroche identifiée dans vos hooks`,
-      detail: `La phrase ci-dessus est calibrée pour déclencher une réaction émotionnelle immédiate chez ce profil. Testez-la en début de post, en titre de vidéo ou en ouverture de story. Mesurez l'engagement et adaptez.`
-    }
+    { titre:`Adapter l'accroche de votre bio`, detail:`Votre premier message doit refléter exactement la douleur principale de ce client. Plus c'est spécifique, plus ça résonne.` },
+    { titre:`Créer un contenu de preuve sociale ciblé`, detail:`Ne montrez pas n'importe quel témoignage — montrez des témoignages de personnes qui ressemblent à ce profil : même situation de départ, mêmes freins, mêmes doutes.` },
+    { titre:`Construire un parcours d'entrée sans friction`, detail:`Ce profil ne convertit pas sur un premier contact. Prévoyez un "premier pas" ultra-simple : un contenu gratuit, une ressource, une invitation à une communauté.` },
+    { titre:`Adresser les objections en amont`, detail:`Les freins identifiés${freinsNoms.length > 0 ? ' (notamment : ' + freinsNoms.join(', ') + ')' : ''} doivent être traités directement dans votre contenu régulier — sans attendre qu'on vous les pose.` },
+    { titre:`Utiliser la phrase d'accroche identifiée`, detail:`La phrase ci-dessus est calibrée pour déclencher une réaction émotionnelle immédiate. Testez-la en début de post, en titre de vidéo ou en ouverture de story.` }
   ];
 
   return { hook, actions };
 }
 
-// ── GÉNÉRATION PRINCIPALE ──
+/* ── GÉNÉRATION PRINCIPALE ── */
 function generate() {
   const prenom = getPrenom();
   const age    = getAge();
@@ -938,119 +816,65 @@ function generate() {
   const psycho     = buildPsycho();
   const fenetre    = buildFenetre();
   const strategie  = buildStrategie();
-  const planAction = buildPlanAction(strategie.angle);
+  const planAction = buildPlanAction();
 
-  // ─── PORTRAIT ───
-  const portraitHTML = `
+  // Portrait
+  document.getElementById('portraitBlock').innerHTML = `
     <div class="portrait-card">
       <div class="portrait-name">${portrait.name}</div>
       <div class="portrait-meta">Profil généré à partir de vos réponses</div>
       <div class="portrait-bio">${portrait.bio}</div>
-      ${portrait.context ? `<div style="margin-top:20px; padding:14px 18px; background:var(--bg); border-radius:10px; font-size:15px; color:var(--text); line-height:1.75; font-weight:300;">${portrait.context}</div>` : ''}
+      ${portrait.context ? `<div class="portrait-context">${portrait.context}</div>` : ''}
     </div>`;
 
-  // ─── BLOC 1 : Psychologie ───
+  // Bloc 1 — Psycho
   const psychoHTML = `
     <div class="guide-block">
       <div class="guide-block-header">
         <div class="guide-block-num">01</div>
-        <div class="guide-block-title-wrap">
-          <div class="guide-block-label">Analyse psychologique</div>
-          <div class="guide-block-title">Ce qui se passe vraiment dans sa tête</div>
-        </div>
+        <div><div class="guide-block-label">Analyse psychologique</div><div class="guide-block-title">Ce qui se passe vraiment dans sa tête</div></div>
       </div>
       <div class="guide-block-body">
-        ${psycho.hasFreins ? `
-        <div class="guide-sub">
-          <div class="guide-sub-title">Décryptage de ses freins réels</div>
-          <div class="guide-sub-text">Les freins de ce profil ne sont pas des obstacles rationnels — ce sont des mécanismes de protection émotionnelle. Comprendre leur origine vous permet d'y répondre efficacement dans votre contenu.</div>
-        </div>
-        ${psycho.freinsHTML}` : ''}
-        ${psycho.hasCreyances ? `
-        <div class="guide-sub">
-          <div class="guide-sub-title">Ses croyances limitantes — et comment les adresser</div>
-          <div class="action-list">${psycho.croyancesHTML}</div>
-        </div>` : ''}
-        ${!psycho.hasFreins && !psycho.hasCreyances ? `
-        <div class="guide-sub">
-          <div class="guide-sub-text">Ce profil n'a pas exprimé de freins majeurs identifiés. Son principal obstacle est probablement le manque de clarté sur la prochaine étape — pas un blocage psychologique profond. Misez sur la simplicité du parcours d'entrée.</div>
-        </div>` : ''}
+        ${psycho.hasFreins ? `<div class="guide-sub"><div class="guide-sub-title">Décryptage de ses freins réels</div><div class="guide-sub-text">Les freins de ce profil ne sont pas des obstacles rationnels — ce sont des mécanismes de protection émotionnelle.</div></div>${psycho.freinsHTML}` : ''}
+        ${psycho.hasCreyances ? `<div class="guide-sub"><div class="guide-sub-title">Ses croyances limitantes</div><div class="action-list">${psycho.croyancesHTML}</div></div>` : ''}
+        ${!psycho.hasFreins && !psycho.hasCreyances ? `<div class="guide-sub"><div class="guide-sub-text">Ce profil n'a pas exprimé de freins majeurs identifiés. Son principal obstacle est probablement le manque de clarté sur la prochaine étape. Misez sur la simplicité du parcours d'entrée.</div></div>` : ''}
       </div>
     </div>`;
 
-  // ─── BLOC 2 : Fenêtre ───
+  // Bloc 2 — Fenêtre
   const fenetreHTML = `
     <div class="guide-block">
       <div class="guide-block-header">
         <div class="guide-block-num">02</div>
-        <div class="guide-block-title-wrap">
-          <div class="guide-block-label">Fenêtre d'opportunité</div>
-          <div class="guide-block-title">Pourquoi maintenant — et pourquoi pas dans 6 mois</div>
-        </div>
+        <div><div class="guide-block-label">Fenêtre d'opportunité</div><div class="guide-block-title">Pourquoi maintenant — et pourquoi pas dans 6 mois</div></div>
       </div>
       <div class="guide-block-body">
-        <div class="guide-sub">
-          <div class="guide-sub-title">Ce qui l'a amené(e) ici</div>
-          <div class="guide-sub-text">${fenetre.declText}</div>
-        </div>
-        <div class="guide-sub">
-          <div class="guide-sub-title">Ce qui empire si rien ne change</div>
-          <div class="guide-sub-text">${fenetre.urgenceText}</div>
-        </div>
-        <div class="guide-sub">
-          <div class="guide-sub-title">Comment utiliser cette information dans votre contenu</div>
-          <div class="guide-sub-text">Ne créez pas une urgence artificielle (compte à rebours, offre limitée inventée). Ce profil le détecte et perd confiance. Créez une urgence <em>réelle</em> : montrez le coût concret de l'inaction dans le temps, avec des chiffres ou des témoignages "j'aurais dû commencer plus tôt".</div>
-        </div>
+        <div class="guide-sub"><div class="guide-sub-title">Ce qui l'a amené(e) ici</div><div class="guide-sub-text">${fenetre.declText}</div></div>
+        <div class="guide-sub"><div class="guide-sub-title">Ce qui empire si rien ne change</div><div class="guide-sub-text">${fenetre.urgenceText}</div></div>
+        <div class="guide-sub"><div class="guide-sub-title">Comment l'utiliser dans votre contenu</div><div class="guide-sub-text">Ne créez pas une urgence artificielle. Créez une urgence <em>réelle</em> : montrez le coût concret de l'inaction dans le temps, avec des chiffres ou des témoignages "j'aurais dû commencer plus tôt".</div></div>
       </div>
     </div>`;
 
-  // ─── BLOC 3 : Stratégie ───
-  const messagesHTML = strategie.messagesCles.map((m,i) => `
-    <div class="action-item">
-      <div class="action-num">${i+1}</div>
-      <div class="action-text">${m}</div>
-    </div>`).join('');
-
-  const formatsHTML = strategie.formatsEfficaces.map(f => `
-    <div class="action-item">
-      <div class="action-text">${f}</div>
-    </div>`).join('');
+  // Bloc 3 — Stratégie
+  const messagesHTML = strategie.messagesCles.map((m,i) => `<div class="action-item"><div class="action-num">${i+1}</div><div class="action-text">${m}</div></div>`).join('');
+  const formatsHTML  = strategie.formatsEfficaces.map(f => `<div class="action-item"><div class="action-text">${f}</div></div>`).join('');
 
   const strategieHTML = `
     <div class="guide-block">
       <div class="guide-block-header">
         <div class="guide-block-num">03</div>
-        <div class="guide-block-title-wrap">
-          <div class="guide-block-label">Stratégie de contenu</div>
-          <div class="guide-block-title">${strategie.angle}</div>
-        </div>
+        <div><div class="guide-block-label">Stratégie de contenu</div><div class="guide-block-title">${strategie.angle}</div></div>
       </div>
       <div class="guide-block-body">
-        <div class="guide-sub">
-          <div class="guide-sub-title">Pourquoi cet angle pour ce profil</div>
-          <div class="guide-sub-text">${strategie.pourquoi}</div>
-        </div>
-        <div class="guide-sub">
-          <div class="guide-sub-title">Les messages qui résonnent avec ce profil</div>
-          <div class="action-list">${messagesHTML}</div>
-        </div>
-        <div class="guide-sub">
-          <div class="guide-sub-title">Formats de contenu les plus efficaces</div>
-          <div class="action-list">${formatsHTML}</div>
-        </div>
-        <div class="guide-sub">
-          <div class="guide-sub-title">L'erreur à ne pas commettre avec ce profil</div>
-          <div class="guide-sub-text" style="background:linear-gradient(135deg,#FDF6EE,#F5E8D5);padding:14px 16px;border-radius:10px;border-left:3px solid var(--gold);">${strategie.erreurEviter}</div>
-        </div>
+        <div class="guide-sub"><div class="guide-sub-title">Pourquoi cet angle</div><div class="guide-sub-text">${strategie.pourquoi}</div></div>
+        <div class="guide-sub"><div class="guide-sub-title">Les messages qui résonnent</div><div class="action-list">${messagesHTML}</div></div>
+        <div class="guide-sub"><div class="guide-sub-title">Formats les plus efficaces</div><div class="action-list">${formatsHTML}</div></div>
+        <div class="guide-sub"><div class="guide-sub-title">L'erreur à ne pas commettre</div><div class="error-box">${strategie.erreurEviter}</div></div>
       </div>
     </div>`;
 
-  // ─── BLOC 4 : Hook + Plan d'action ───
-  const actionsHTML = planAction.actions.map((a,i) => `
-    <div class="action-item">
-      <div class="action-num">${i+1}</div>
-      <div class="action-text"><strong>${a.titre}</strong><br>${a.detail}</div>
-    </div>`).join('');
+  // Bloc 4 — Plan
+  const actionsHTML = planAction.actions.map((a,i) => `<div class="action-item"><div class="action-num">${i+1}</div><div class="action-text"><strong>${a.titre}</strong><br>${a.detail}</div></div>`).join('');
 
   const planHTML = `
     <div class="hook-box">
@@ -1061,19 +885,12 @@ function generate() {
     <div class="guide-block">
       <div class="guide-block-header">
         <div class="guide-block-num">04</div>
-        <div class="guide-block-title-wrap">
-          <div class="guide-block-label">Plan d'action</div>
-          <div class="guide-block-title">5 actions concrètes pour toucher ce profil</div>
-        </div>
+        <div><div class="guide-block-label">Plan d'action</div><div class="guide-block-title">5 actions concrètes pour toucher ce profil</div></div>
       </div>
-      <div class="guide-block-body">
-        <div class="action-list">${actionsHTML}</div>
-      </div>
+      <div class="guide-block-body"><div class="action-list">${actionsHTML}</div></div>
     </div>`;
 
-  // ─── RENDU ───
-  document.getElementById('portraitBlock').innerHTML = portraitHTML;
-  document.getElementById('guideBlocks').innerHTML   = psychoHTML + fenetreHTML + strategieHTML + planHTML;
+  document.getElementById('guideBlocks').innerHTML = psychoHTML + fenetreHTML + strategieHTML + planHTML;
 
   for (let i = 1; i <= TOTAL; i++) {
     const el = document.getElementById('step-' + i);
