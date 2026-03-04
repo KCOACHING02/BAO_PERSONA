@@ -498,7 +498,7 @@ body {
     <div style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-family:'DM Mono',monospace;">✓ Persona sauvegardé · Prochaine étape</div>
     <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--cream);line-height:1.25;margin-bottom:8px;">Génère tes prompts<br><em style="color:var(--gold)">personnalisés maintenant.</em></div>
     <div style="font-size:13px;color:rgba(250,246,239,0.55);line-height:1.65;margin-bottom:20px;">Le générateur va utiliser ce Client Idéal automatiquement — sans te reposer les mêmes questions.</div>
-    <a href="https://kcoaching02.github.io/BAO_PROMPTS/" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--black);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;padding:14px 22px;border-radius:12px;text-decoration:none;box-shadow:0 6px 18px rgba(201,168,76,0.35);transition:all 0.2s;">
+    <a id="btnGoPrompts" href="https://kcoaching02.github.io/prompt/" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--black);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;padding:14px 22px;border-radius:12px;text-decoration:none;box-shadow:0 6px 18px rgba(201,168,76,0.35);transition:all 0.2s;">
       ✨ Générer mes prompts →
     </a>
   </div>
@@ -926,6 +926,12 @@ function generate() {
       ts:          Date.now()
     };
     localStorage.setItem('bv_persona', JSON.stringify(persona));
+    // Encoder le persona dans l'URL pour le transmettre au générateur (origines différentes)
+    try {
+      const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(persona))));
+      document.getElementById('btnGoPrompts').href =
+        'https://kcoaching02.github.io/prompt/?p=' + encoded;
+    } catch(e2) {}
   } catch(e) {}
 
   for (let i = 1; i <= TOTAL; i++) {
