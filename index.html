@@ -493,7 +493,16 @@ body {
   <div id="portraitBlock"></div>
   <div class="section-sep">Guide stratégique</div>
   <div id="guideBlocks"></div>
-  <button class="restart-btn" onclick="restart()">← Recommencer</button>
+  <!-- CTA vers générateur de prompts -->
+  <div id="promptCTA" style="display:none; margin-top:8px; background:var(--black); border-radius:16px; padding:24px; border:1px solid rgba(201,168,76,0.25);">
+    <div style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-family:'DM Mono',monospace;">✓ Persona sauvegardé · Prochaine étape</div>
+    <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--cream);line-height:1.25;margin-bottom:8px;">Génère tes prompts<br><em style="color:var(--gold)">personnalisés maintenant.</em></div>
+    <div style="font-size:13px;color:rgba(250,246,239,0.55);line-height:1.65;margin-bottom:20px;">Le générateur va utiliser ce Client Idéal automatiquement — sans te reposer les mêmes questions.</div>
+    <a href="https://kcoaching02.github.io/BAO_PROMPTS/" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--black);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;padding:14px 22px;border-radius:12px;text-decoration:none;box-shadow:0 6px 18px rgba(201,168,76,0.35);transition:all 0.2s;">
+      ✨ Générer mes prompts →
+    </a>
+  </div>
+  <button class="restart-btn" onclick="restart()">← Recommencer le quiz</button>
 </div>
 
 <!-- NAV -->
@@ -554,6 +563,7 @@ function restart() {
   }
   current = 1;
   document.getElementById('result').style.display = 'none';
+  document.getElementById('promptCTA').style.display = 'none';
   document.getElementById('step-1').classList.add('active');
   document.getElementById('navBar').style.display = 'flex';
   document.getElementById('skipHint').style.display = 'block';
@@ -892,6 +902,32 @@ function generate() {
 
   document.getElementById('guideBlocks').innerHTML = psychoHTML + fenetreHTML + strategieHTML + planHTML;
 
+  // ── SAUVEGARDE PERSONA ──
+  try {
+    const situLabels = {'salarie':'salarié(e)','chomage':'en recherche d\'emploi','etudiant':'étudiant(e)','reconversion':'en reconversion professionnelle','entrepreneur':'entrepreneur(e)','maman-solo':'maman solo'};
+    const motivLabels = {'revenu-plaisir':'veut un revenu complémentaire','stress-argent':'stressé(e) financièrement','liberte':'manque de liberté','epuise-salariat':'épuisé(e) par le salariat','temps-famille':'manque de temps pour sa famille','nomade':'veut travailler de partout','quitter-emploi':'veut quitter son emploi'};
+    const freinLabels = {'peur-depenser':'peur de dépenser pour rien','peur-echouer':'peur d\'échouer','pas-temps':'manque de temps','ne-sait-pas':'ne sait pas par où commencer','peur-regard':'peur du regard des autres','attend-moment':'attend le bon moment'};
+    const croyanceLabels = {'seul':'pense pouvoir trouver seul(e)','pas-bon-moment':'attend le bon moment','attendre-argent':'attend d\'avoir plus d\'argent','attendre-temps':'attend d\'avoir plus de temps','pas-pour-moi':'pense que ça ne marchera pas pour lui/elle','pas-fait':'ne se sent pas fait(e) pour ça','regarde-encore':'continue de regarder sans agir'};
+    const ressentiLabels = {'epuise-continue':'épuisé(e) mais continue par obligation','coincé':'se sent coincé(e) dans sa vie','culpabilise-famille':'culpabilise pour sa famille','travaille-pour-rien':'impression de travailler pour rien','jalousie':'voit les autres réussir et se questionne','perdu':'perdu(e), ne sait pas par où commencer'};
+    const visionLabels   = {'temps-famille-v':'retrouver du temps pour sa famille','plus-stress-argent':'ne plus stresser pour l\'argent','fierte':'être fier/fière de ce qu\'il/elle a construit','ses-regles':'vivre selon ses propres règles','inspirer':'inspirer les gens autour de lui/elle'};
+
+    const sitKey = Object.keys(situLabels).find(k => has(1, k));
+
+    const persona = {
+      nom:         `${prenom}, ${age} ans`,
+      situation:   situLabels[sitKey] || 'en quête de changement',
+      motivations: (answers[2]||[]).filter(v=>!v.startsWith('autre')).map(v=>motivLabels[v]).filter(Boolean),
+      freins:      (answers[3]||[]).filter(v=>!v.startsWith('autre')).map(v=>freinLabels[v]).filter(Boolean),
+      croyances:   (answers[4]||[]).filter(v=>!v.startsWith('autre')).map(v=>croyanceLabels[v]).filter(Boolean),
+      ressentis:   (answers[5]||[]).filter(v=>!v.startsWith('autre')).map(v=>ressentiLabels[v]).filter(Boolean),
+      visions:     (answers[10]||[]).filter(v=>!v.startsWith('autre')).map(v=>visionLabels[v]).filter(Boolean),
+      strategie:   strategie.angle,
+      bio:         portrait.bio,
+      ts:          Date.now()
+    };
+    localStorage.setItem('bv_persona', JSON.stringify(persona));
+  } catch(e) {}
+
   for (let i = 1; i <= TOTAL; i++) {
     const el = document.getElementById('step-' + i);
     if (el) el.classList.remove('active');
@@ -899,6 +935,7 @@ function generate() {
   document.getElementById('navBar').style.display    = 'none';
   document.getElementById('skipHint').style.display  = 'none';
   document.getElementById('result').style.display    = 'block';
+  document.getElementById('promptCTA').style.display = 'block';
   document.getElementById('progressFill').style.width = '100%';
   document.getElementById('progressText').textContent = 'Analyse générée';
   document.getElementById('progressPct').textContent  = '100%';
