@@ -928,7 +928,7 @@ function generate() {
     localStorage.setItem('bv_persona', JSON.stringify(persona));
     // Encoder le persona dans l'URL pour le transmettre au générateur (origines différentes)
     try {
-      const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(persona))));
+      const encoded = btoa(encodeURIComponent(JSON.stringify(persona)));
       document.getElementById('btnGoPrompts').href =
         'https://kcoaching02.github.io/prompt/?p=' + encoded;
     } catch(e2) {}
